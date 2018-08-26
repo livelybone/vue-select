@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "vue, select, cascader"
+    "url": "https://github.com/livelybone/vue-select"
   },
   "keywords": [
     "vue",
@@ -20,9 +20,9 @@
   "author": "livelybone(lzp)",
   "license": "MIT",
   "bugs": {
-    "url": "vue, select, cascader"
+    "url": "https://github.com/livelybone/vue-select/issues"
   },
-  "homepage": "vue, select, cascader",
+  "homepage": "https://github.com/livelybone/vue-select#readme",
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.19",
     "babel-core": "^6.26.3",
