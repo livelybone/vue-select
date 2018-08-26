@@ -1,0 +1,6 @@
+# /node_modules/* and /bower_components/* in the project root are ignored by default
+
+**/*.spec.js
+**/*.test.js
+**/*.e2e.js
+**/webpack.**.js
