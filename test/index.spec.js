@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils';
-import Index from '../src/components/Index.vue';
+import Index from '../src/components/SelectBase.vue';
 
-describe('Index.vue', () => {
+describe('SelectAllowTags.vue', () => {
   it('Rendered', () => {
     const wrapper = shallowMount(Index);
     expect(wrapper.find('div').exists()).to.equal(true);

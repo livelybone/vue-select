@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vue-select</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="../node_modules/@livelybone/mouse-wheel/lib/index.js"></script>
+  <script src="../node_modules/@livelybone/meta-scale/lib/index.js"></script>
+  <script src="../node_modules/@livelybone/simple-observer/lib/index.js"></script>
+  <script src="../node_modules/@livelybone/touch/lib/index.js"></script>
+  <script src="../node_modules/vue-scrollbar-live/lib/index.js"></script>
+  <script src="../lib/index.js"></script>
+  <link rel="stylesheet" href="../lib/css/index.css">
+</head>
+<body>
+<div id="datetime-picker"></div>
+<div id="multi"></div>
+<input type="text">
+<!--<button onclick="console.log('button',1)">点击</button>-->
+<script type="text/javascript">
+console.log(VueSelect)
+
+new Vue({
+  el: '#datetime-picker',
+  template: '<vue-select :isMobile="isMobile" v-model="value" :options="options" :search="true" maxHeight="50vw"/>',
+  data: function () {
+    return {
+      isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
+      value: 1,
+      options: [
+        { name: 'place 1', value: 1 },
+        { name: 'place 2', value: 2 },
+        { name: 'place 3', value: 3 },
+        { name: 'place 4', value: 4 },
+        { name: 'place 5', value: 5 },
+        { name: 'place 6', value: 6 },
+        { name: 'place 7', value: 7 },
+        { name: 'place 8', value: 8 },
+        { name: 'place 9', value: 9 },
+        { name: 'place 10', value: 10 },
+        { name: 'place 11', value: 11 },
+        { name: 'place 12', value: 12 },
+        { name: 'place 13', value: 13 },
+        { name: 'place 14', value: 14 },
+        { name: 'place 15', value: 15 },
+        { name: 'place 16', value: 16 },
+        { name: 'place 17', value: 17 },
+      ]
+    }
+  },
+  methods: {
+    log: function (val) {
+      console.log(val)
+      this.value = val
+    },
+  },
+  components: { 'vue-select': VueSelect.SelectBase }
+})
+new Vue({
+  el: '#multi',
+  template: '<vue-select-multi :isMobile="isMobile" v-model="value" :options="options" :search="true" maxHeight="50vw"/>',
+  data: function () {
+    return {
+      isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
+      value: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      options: [
+        { name: 'place 1', value: 1 },
+        { name: 'place 2', value: 2 },
+        { name: 'place 3', value: 3 },
+        { name: 'place 4', value: 4 },
+        { name: 'place 5', value: 5 },
+        { name: 'place 6', value: 6 },
+        { name: 'place 7', value: 7 },
+        { name: 'place 8', value: 8 },
+        { name: 'place 9', value: 9 },
+        { name: 'place 10', value: 10 },
+        { name: 'place 11', value: 11 },
+        { name: 'place 12', value: 12 },
+        { name: 'place 13', value: 13 },
+        { name: 'place 14', value: 14 },
+        { name: 'place 15', value: 15 },
+        { name: 'place 16', value: 16 },
+        { name: 'place 17', value: 17 },
+      ]
+    }
+  },
+  methods: {
+    log: function (val) {
+      console.log(val)
+      this.value = val
+    },
+  },
+  components: { 'vue-select-multi': VueSelect.SelectMulti }
+})
+</script>
+</body>
+</html>

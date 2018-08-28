@@ -15,13 +15,21 @@ function getEntries() {
 
 const config = {
   mode: 'production',
-  entry: { index: './src/components/Index.vue' },
+  entry: { index: './src/index.js' },
   output: {
     path: path.resolve(__dirname, './lib'),
     filename: './[name].js',
-    library: 'VueComponent',
+    library: 'VueSelect',
     libraryTarget: 'umd',
     globalObject: 'this',
+  },
+  externals: {
+    'vue-scrollbar-live': {
+      commonjs: 'vue-scrollbar-live',
+      commonjs2: 'vue-scrollbar-live',
+      amd: 'vue-scrollbar-live',
+      root: 'VueScrollBar',
+    },
   },
   module: {
     rules: [

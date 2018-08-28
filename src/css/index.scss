@@ -1,0 +1,234 @@
+$main: #30b386;
+$border: #c2ccdc;
+$font: #666;
+$placeholder: #aaa;
+$select: #fff;
+$input-bg: #fff;
+$base-size: 10px;
+$option-hover-bg: lighten($main, 20%);
+$shadow: rgba(0, 0, 0, .1);
+$multi-value-color: #eee;
+
+@function size($factor) {
+  @return $factor * $base-size
+}
+
+$option-height: size(3);
+$multi-value-height: size(2.4);
+
+@import "../../node_modules/vue-scrollbar-live/lib/css/index.css";
+
+@mixin pseudo($offset: -5, $bg:$border, $lr: left, $bt: top) {
+  content: '';
+  position: absolute;
+  #{$lr}: size(2);
+  #{$bt}: calc(#{$offset} * #{$base-size});
+  width: 0;
+  height: 0;
+  border: size(.6) solid transparent;
+
+  @if ($bt==top) {
+    border-top: 0;
+    border-bottom-color: $bg;
+  } @else {
+    border-bottom: 0;
+    border-top-color: $bg;
+  }
+}
+
+@mixin middleLine($color) {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: $color;
+}
+
+@mixin dot($color) {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: size(.6);
+  height: size(.6);
+  margin: size(-.3) 0 0 size(-.3);
+  border-radius: size(.3);
+  background: $color;
+}
+
+@mixin selectItem($lr:left, $bt: bottom) {
+  #{$bt}: calc(100% + #{$base-size});
+
+  &:before {
+    @include pseudo(-.6, rgba($border, .5), $lr, $bt)
+  }
+
+  &:after {
+    @include pseudo(-.5, $input-bg, $lr, $bt)
+  }
+}
+
+.select-base, .select-multi {
+  position: relative;
+  padding: 0 size(1);
+  border: 1px solid $border;
+  border-radius: size(.3);
+  background: transparent;
+  cursor: pointer;
+
+  &.select-multi {
+  }
+
+  * {
+    box-sizing: border-box;
+    font-size: size(1.4);
+    color: $font;
+    outline: none !important;
+  }
+
+  .value, .input {
+    width: 100%;
+    height: $option-height;
+    line-height: $option-height;
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+
+    &.placeholder {
+      color: $placeholder;
+    }
+  }
+
+  .input {
+    display: block;
+    outline: none !important;
+  }
+
+  .values {
+    min-height: $option-height;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .val {
+    display: inline-block;
+    width: auto;
+    height: $multi-value-height;
+    line-height: $multi-value-height;
+    padding: 0 size(.6);
+    margin: ($option-height - $multi-value-height)/2;
+    margin-left: 0;
+    border-radius: size(.2);
+    background: $multi-value-color;
+    white-space: nowrap;
+    vertical-align: top;
+
+    .v {
+      float: left;
+      font-size: size(1.2)
+    }
+
+    .icon-del {
+      float: right;
+      margin: 0 0 0 size(1);
+      position: relative;
+      width: $multi-value-height / 2;
+      height: 100%;
+
+      &:hover {
+        &:before, &:after {
+          background: darken($font, 20%);
+        }
+      }
+
+      &:before, &:after {
+        @include middleLine($font);
+        transform: rotate(45deg);
+      }
+      &:after {
+        transform: rotate(-45deg);
+      }
+    }
+
+    &.input {
+      background: transparent;
+    }
+  }
+
+  .icon-arrow {
+    position: absolute;
+    right: size(.4);
+    top: 50%;
+    border-right: size(0.5) solid transparent;
+    border-left: size(0.5) solid transparent;
+    border-top: size(0.5) solid $font;
+    margin: size(-0.25) 0 0;
+
+    &.reverse {
+      border-top: none;
+      border-bottom: size(0.5) solid $font;
+    }
+  }
+
+  .options {
+    position: absolute;
+    left: -1px;
+    right: -1px;
+    padding: size(.4) 0;
+    z-index: 9999;
+    border: 1px solid rgba($border, .5);
+    border-radius: size(.3);
+    box-shadow: 0 1px size(1) $shadow;
+    background: $input-bg;
+
+    &.left-bottom {
+      @include selectItem(left, top)
+    }
+
+    &.left-top {
+      @include selectItem(left, bottom)
+    }
+
+    &.right-bottom {
+      @include selectItem(right, top)
+    }
+
+    &.right-top {
+      @include selectItem(right, bottom)
+    }
+
+    .option {
+      height: $option-height;
+      line-height: $option-height;
+      padding: 0 size(1);
+
+      &.selected {
+        color: $select !important;
+        background: $main !important;
+      }
+
+      &.multi-selected {
+        color: $main !important;
+        font-weight: 600;
+
+        .icon-selected {
+          float: right;
+          position: relative;
+          width: $option-height / 2;
+          height: 100%;
+
+          &:before {
+            @include dot($main);
+          }
+        }
+      }
+
+      &:hover {
+        background: $option-hover-bg !important;
+      }
+    }
+  }
+}
