@@ -27,9 +27,6 @@ module.exports = {
     _optionsClass() {
       return /^(left|right)-(top|bottom)$/.test(this.optionsClass) ? this.optionsClass : 'left-bottom'
     },
-    selected() {
-      return this.options.find(item => item.value === this.value) || {}
-    },
     valid() {
       let valid = true
       valid = !this.options || !this.options.every(item => item.name && item.value !== undefined)
@@ -62,6 +59,17 @@ module.exports = {
     },
     bind(bool) {
       window[`${bool ? 'add' : 'remove'}EventListener`]('click', this.hide)
+    },
+    find(arr, rule) {
+      let item = {}
+      arr.some((item1) => {
+        if (rule(item1)) {
+          item = item1
+          return true
+        }
+        return false
+      })
+      return item
     },
   },
 }

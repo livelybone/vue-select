@@ -3,8 +3,9 @@
     <div v-if="!search||optionsHidden" class="value"
          :class="{'placeholder':!selected.value&&selected.value!==0}"
          :style="inputWrapStyle" v-html="selected.name"
-         @click.stop="optionsHidden=false"></div>
-    <input v-else class="input" v-model="inputVal" :style="inputWrapStyle" :autofocus="true">
+         @click.stop="optionsHidden=false;$nextTick(()=>$refs.input.focus())"></div>
+    <input v-show="search&&!optionsHidden" class="input" v-model="inputVal" :style="inputWrapStyle"
+           ref="input">
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
     <div v-if="!optionsHidden" class="options" :class="_optionsClass">
       <scrollbar :isMobile="isMobile" :maxHeight="maxHeight||'50vh'"
@@ -27,6 +28,11 @@ import Mixin from '../common/Mixin'
 
 export default {
   mixins: [Mixin],
+  computed: {
+    selected() {
+      return this.find(this.options, op => op.value === this.value)
+    },
+  },
   methods: {
     click(val) {
       this.$emit('input', val)

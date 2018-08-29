@@ -14,7 +14,7 @@
                  @endDrag="endDrag">
         <div v-for="(o,i) in options"
              class="option"
-             :class="{'multi-selected':value.includes(o.value)}"
+             :class="{'multi-selected':value.some(val=>val===o.value)}"
              :key="i"
              v-html="html(o)"
              @click.stop="click(o.value)">
@@ -40,15 +40,22 @@ export default {
   },
   computed: {
     selectedArr() {
-      return this.value.map(val => this.options.find(op => op.value === val))
+      return this.value.map(val => this.find(this.options, op => op.value === val))
     },
   },
   methods: {
     html(o) {
-      return `${o.name}${this.value.includes(o.value) ? '<span class="icon-selected"></span>' : ''}`
+      return `${o.name}${this.value.some(v => v === o.value) ? '<span class="icon-selected"></span>' : ''}`
     },
     click(val) {
-      const index = Object.keys(this.value).find(k => this.value[k] === val)
+      let index
+      this.value.some((v, i) => {
+        if (v === val) {
+          index = i
+          return true
+        }
+        return false
+      })
       if (index) {
         this.$emit('input', this.value.slice(0, index).concat(this.value.slice(+index + 1)))
       } else {
