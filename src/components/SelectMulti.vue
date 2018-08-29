@@ -56,7 +56,7 @@ export default {
         }
         return false
       })
-      if (index) {
+      if (index !== undefined) {
         this.$emit('input', this.value.slice(0, index).concat(this.value.slice(+index + 1)))
       } else {
         this.$emit('input', this.value.concat([val]))
