@@ -1,11 +1,13 @@
 <template v-if="valid">
   <div class="select-multi" @click.stop="">
     <div class="value values" @click.stop="optionsHidden=false;$refs.input.focus()">
-      <div v-for="(o, i) in selectedArr" class="val" :key="i">
+      <div v-for="(o, i) in selected" class="val" :key="i">
         <span class="v" v-html="o.name"></span>
         <span class="icon-del" @click.stop="click(o.value)"></span>
       </div>
-      <input v-if="search" v-model="inputVal" class="input val" ref="input"/>
+      <input v-if="search" v-model="inputVal" class="input val"
+             :placeholder="_searchPlaceholder" ref="input">
+      <span v-else-if="selected.length>0" class="val placeholder">{{_placeholder}}</span>
     </div>
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
     <div v-if="!optionsHidden" class="options" :class="_optionsClass">
@@ -14,7 +16,7 @@
                  @endDrag="endDrag">
         <div v-for="(o,i) in options"
              class="option"
-             :class="{'multi-selected':value.some(val=>val===o.value)}"
+             :class="{'multi-selected':isSelected(o.value)}"
              :key="i"
              v-html="html(o)"
              @click.stop="click(o.value)">
@@ -39,28 +41,24 @@ export default {
     },
   },
   computed: {
-    selectedArr() {
-      return this.value.map(val => this.find(this.options, op => op.value === val))
+    selected() {
+      return this.mergedOptions.filter(op => this.value.some(v => v === op.value))
     },
   },
   methods: {
     html(o) {
-      return `${o.name}${this.value.some(v => v === o.value) ? '<span class="icon-selected"></span>' : ''}`
+      return `${o.name}${this.isSelected(o.value) ? '<span class="icon-selected"></span>' : ''}`
     },
-    click(val) {
-      let index
-      this.value.some((v, i) => {
-        if (v === val) {
-          index = i
-          return true
-        }
-        return false
-      })
-      if (index !== undefined) {
+    click(value) {
+      const index = this.find(Object.keys(this.value), k => this.value[k] === value, -1)
+      if (index > -1) {
         this.$emit('input', this.value.slice(0, index).concat(this.value.slice(+index + 1)))
       } else {
-        this.$emit('input', this.value.concat([val]))
+        this.$emit('input', this.value.concat([value]))
       }
+    },
+    isSelected(val) {
+      return this.value.some(v => v === val)
     },
   },
   components: { Scrollbar },

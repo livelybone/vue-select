@@ -18,6 +18,24 @@ $multi-value-height: size(2.4);
 
 @import "../../node_modules/vue-scrollbar-live/lib/css/index.css";
 
+@mixin placeholder($color:$placeholder) {
+  &::-webkit-input-placeholder { /* WebKit browsers */
+    color: $color;
+  }
+
+  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $color;
+  }
+
+  &::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $color;
+  }
+
+  &:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $color;
+  }
+}
+
 @mixin pseudo($offset: -5, $bg:$border, $lr: left, $bt: top) {
   content: '';
   position: absolute;
@@ -105,6 +123,8 @@ $multi-value-height: size(2.4);
   .input {
     display: block;
     outline: none !important;
+
+    @include placeholder()
   }
 
   .values {
