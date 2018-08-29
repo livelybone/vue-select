@@ -17,6 +17,7 @@
              :key="i"
              v-html="o.name"
              @click.stop="click(o.value)"></div>
+        <slot v-if="!options.length"/>
       </scrollbar>
     </div>
   </div>

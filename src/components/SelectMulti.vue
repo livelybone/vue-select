@@ -21,6 +21,7 @@
              v-html="html(o)"
              @click.stop="click(o.value)">
         </div>
+        <slot v-if="!options.length"/>
       </scrollbar>
     </div>
   </div>
