@@ -8,66 +8,67 @@ function getEntries() {
   return fs.readdirSync(path.resolve(__dirname, './src/components'))
     .filter(filename => reg.test(filename) && !fs.statSync(path.resolve(__dirname, './src/components', filename)).isDirectory())
     .map(filename => ({
-      name: [filename.replace(reg, '')],
+      name: filename.replace(reg, ''),
       filename: path.resolve(__dirname, './src/components', filename),
     }))
 }
 
-const config = {
-  mode: 'production',
-  entry: { index: './src/index.js' },
-  output: {
-    path: path.resolve(__dirname, './lib'),
-    filename: './[name].js',
-    library: 'VueSelect',
-    libraryTarget: 'umd',
-    globalObject: 'this',
-  },
-  externals: {
-    'vue-scrollbar-live': {
-      commonjs: 'vue-scrollbar-live',
-      commonjs2: 'vue-scrollbar-live',
-      amd: 'vue-scrollbar-live',
-      root: 'VueScrollBar',
+const config = [{ name: 'index', filename: './src/index.js' }, ...getEntries()].map(entry => {
+  return {
+    mode: 'production',
+    entry: { [entry.name]: entry.filename },
+    output: {
+      path: path.resolve(__dirname, './lib'),
+      filename: './[name].js',
+      library: entry.name === 'index' ? 'VueSelect' : entry.name,
+      libraryTarget: 'umd',
+      globalObject: 'this',
     },
-  },
-  module: {
-    rules: [
-      { test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader' },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['env', {
-              modules: false,
-              targets: {
-                browsers: ['> 1%', 'last 2 versions', 'not ie <= 8'],
+    externals: {
+      'vue-scrollbar-live': {
+        commonjs: 'vue-scrollbar-live',
+        commonjs2: 'vue-scrollbar-live',
+        amd: 'vue-scrollbar-live',
+        root: 'VueScrollBar',
+      },
+    },
+    module: {
+      rules: [
+        { test: /\.vue$/, exclude: /node_modules/, loader: 'vue-loader' },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['env', {
+                modules: false,
+                targets: {
+                  browsers: ['> 1%', 'last 2 versions', 'not ie <= 8'],
+                },
+              }],
+              'stage-2',
+            ],
+            env: {
+              test: {
+                plugins: ['istanbul'],
               },
-            }],
-            'stage-2',
-          ],
-          env: {
-            test: {
-              plugins: ['istanbul'],
             },
           },
         },
-      },
+      ],
+    },
+    plugins: [
+      new VueLoaderPlugin(),
+      // copy custom static assets
+      new CopyWebpackPlugin([
+        {
+          from: path.resolve(__dirname, 'src/css'),
+          to: 'css',
+          ignore: ['.*'],
+        },
+      ]),
     ],
-  },
-  plugins: [
-    new VueLoaderPlugin(),
-    // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, 'src/css'),
-        to: 'css',
-        ignore: ['.*'],
-      },
-    ]),
-  ],
-}
-
+  }
+})
 module.exports = config
