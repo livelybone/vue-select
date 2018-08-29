@@ -18,7 +18,7 @@ import { find } from './find'
 export default {
   beforeMount() {
     const index = find(Object.keys(this.options), k => this.options[k].selected)
-    this.scrollTo = index / (this.options.length - 1)
+    this.scrollTo = this.options.length === 1 ? 0 : index / (this.options.length - 1)
   },
   props: {
     isMobile: Boolean,

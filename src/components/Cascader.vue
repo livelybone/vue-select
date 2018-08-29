@@ -23,7 +23,7 @@ import Options from '../common/Options.vue'
 export default {
   mixins: [Mixin],
   props: {
-    value: [String, Number],
+    value: Array,
   },
   computed: {
     selected() {

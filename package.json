@@ -57,6 +57,6 @@
     "webpack-command": "^0.2.1"
   },
   "dependencies": {
-    "vue-scrollbar-live": "^3.0.0"
+    "vue-scrollbar-live": "^3.1.0"
   }
 }
