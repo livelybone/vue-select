@@ -36,14 +36,14 @@ $multi-value-height: size(2.4);
   }
 }
 
-@mixin pseudo($offset: -5, $bg:$border, $lr: left, $bt: top) {
+@mixin pseudo($bg:$border, $lr: left, $bt: top, $btVal: size(-.5), $lrVal: size(2), $borderWidth: size(.6)) {
   content: '';
   position: absolute;
-  #{$lr}: size(2);
-  #{$bt}: calc(#{$offset} * #{$base-size});
+  #{$lr}: $lrVal;
+  #{$bt}: $btVal;
   width: 0;
   height: 0;
-  border: size(.6) solid transparent;
+  border: $borderWidth solid transparent;
 
   @if ($bt==top) {
     border-top: 0;
@@ -80,11 +80,11 @@ $multi-value-height: size(2.4);
   #{$bt}: calc(100% + #{$base-size});
 
   &:before {
-    @include pseudo(-.6, rgba($border, .5), $lr, $bt)
+    @include pseudo(rgba($border, .5), $lr, $bt, size(-.6))
   }
 
   &:after {
-    @include pseudo(-.5, $input-bg, $lr, $bt)
+    @include pseudo($input-bg, $lr, $bt, calc(size(-.6) + 1px))
   }
 }
 
@@ -141,7 +141,7 @@ $multi-value-height: size(2.4);
     display: block;
     outline: none !important;
 
-    @include placeholder()
+    @include placeholder($placeholder)
   }
 
   .values {
@@ -196,17 +196,25 @@ $multi-value-height: size(2.4);
   }
 
   .icon-arrow {
+    display: block;
     position: absolute;
     right: size(.4);
     top: 50%;
-    border-right: size(0.5) solid transparent;
-    border-left: size(0.5) solid transparent;
-    border-top: size(0.5) solid $font;
+    width: size(1);
+    height: size(.5);
     margin: size(-0.25) 0 0;
+    transition: transform .5s ease;
+
+    &:before {
+      @include pseudo($font, left, bottom, 0, 0, size(.5));
+    }
+
+    &:after {
+      @include pseudo($input-bg, left, bottom, 1px, 0, size(.5));
+    }
 
     &.reverse {
-      border-top: none;
-      border-bottom: size(0.5) solid $font;
+      transform: rotate(180deg);
     }
   }
 
