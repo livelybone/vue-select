@@ -23,7 +23,7 @@ console.log(VueSelect)
 
 new Vue({
   el: '#datetime-picker',
-  template: '<vue-select :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="50vw" @search="log">无结果</vue-select>',
+  template: '<vue-select :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</vue-select>',
   data: function () {
     return {
       isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
@@ -68,7 +68,7 @@ new Vue({
 })
 new Vue({
   el: '#multi',
-  template: '<vue-select-multi :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="50vw" @search="log">无结果</vue-select-multi>',
+  template: '<vue-select-multi :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</vue-select-multi>',
   data: function () {
     var options = [
       { name: 'place 1', value: 1 },

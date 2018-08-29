@@ -8,30 +8,26 @@
            :placeholder="_searchPlaceholder" ref="input">
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
     <div v-if="!optionsHidden" class="options" :class="_optionsClass">
-      <scrollbar :isMobile="isMobile" :maxHeight="maxHeight||'50vh'"
-                 @startDrag="shouldHide=false"
-                 @endDrag="endDrag">
-        <div v-for="(o,i) in options"
-             class="option"
-             :class="{selected:o.value===value}"
-             :key="i"
-             v-html="o.name"
-             @click.stop="click(o.value)"></div>
-        <slot v-if="!options.length"/>
-      </scrollbar>
+      <options :isMobile="isMobile" :maxHeight="maxHeight||'50vh'" :options="showOptions"
+               @startDrag="shouldHide=false" @endDrag="endDrag" @select="click">
+        <slot/>
+      </options>
     </div>
   </div>
 </template>
 
 <script>
-import Scrollbar from 'vue-scrollbar-live'
 import Mixin from '../common/Mixin'
+import Options from '../common/Options.vue'
 
 export default {
   mixins: [Mixin],
   computed: {
     selected() {
       return this.find(this.mergedOptions, op => op.value === this.value)
+    },
+    showOptions() {
+      return this.options.map(op => ({ ...op, selected: op.value === this.value }))
     },
   },
   methods: {
@@ -40,6 +36,6 @@ export default {
       this.optionsHidden = true
     },
   },
-  components: { Scrollbar },
+  components: { Options },
 }
 </script>

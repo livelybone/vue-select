@@ -97,6 +97,23 @@ $multi-value-height: size(2.4);
   cursor: pointer;
 
   &.select-multi {
+
+    .options .option.selected {
+      color: $main !important;
+      background: transparent !important;
+      font-weight: 600;
+
+      .icon-selected {
+        float: right;
+        position: relative;
+        width: $option-height / 2;
+        height: 100%;
+
+        &:before {
+          @include dot($main);
+        }
+      }
+    }
   }
 
   * {
@@ -228,22 +245,6 @@ $multi-value-height: size(2.4);
       &.selected {
         color: $select !important;
         background: $main !important;
-      }
-
-      &.multi-selected {
-        color: $main !important;
-        font-weight: 600;
-
-        .icon-selected {
-          float: right;
-          position: relative;
-          width: $option-height / 2;
-          height: 100%;
-
-          &:before {
-            @include dot($main);
-          }
-        }
       }
 
       &:hover {

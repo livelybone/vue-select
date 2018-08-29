@@ -1,4 +1,6 @@
-module.exports = {
+import { find } from './find'
+
+export default {
   beforeMount() {
     this.mergedOptions = [...this.options]
   },
@@ -74,17 +76,7 @@ module.exports = {
     bind(bool) {
       window[`${bool ? 'add' : 'remove'}EventListener`]('click', this.hide)
     },
-    find(arr, rule, defaultVal = {}) {
-      let item = defaultVal
-      arr.some((item1) => {
-        if (rule(item1)) {
-          item = item1
-          return true
-        }
-        return false
-      })
-      return item
-    },
+    find,
     mergeOptions(a1, a2) {
       const obj = [...a1, ...a2].reduce((pre, item) => {
         const item1 = pre[item.value]
