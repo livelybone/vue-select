@@ -57,8 +57,8 @@ export default {
         this.$emit('input', this.value.concat([value]))
       }
     },
-    isSelected(val) {
-      return this.value.some(v => v === val)
+    isSelected({value}) {
+      return this.value.some(v => v === value)
     },
   },
   components: { Options },

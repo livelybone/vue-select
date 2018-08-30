@@ -12,10 +12,14 @@
   <script src="../node_modules/vue-scrollbar-live/lib/index.js"></script>
   <script src="../lib/index.js"></script>
   <link rel="stylesheet" href="../lib/css/index.css">
+  <style>
+
+  </style>
 </head>
 <body>
 <div id="datetime-picker"></div>
 <div id="multi"></div>
+<div id="cascader"></div>
 <input type="text">
 <!--<button onclick="console.log('button',1)">点击</button>-->
 <script type="text/javascript">
@@ -23,7 +27,7 @@ console.log(VueSelect)
 
 new Vue({
   el: '#datetime-picker',
-  template: '<vue-select :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</vue-select>',
+  template: '<vue-select class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</vue-select>',
   data: function () {
     return {
       isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
@@ -68,7 +72,7 @@ new Vue({
 })
 new Vue({
   el: '#multi',
-  template: '<vue-select-multi :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</vue-select-multi>',
+  template: '<vue-select-multi class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</vue-select-multi>',
   data: function () {
     var options = [
       { name: 'place 1', value: 1 },
@@ -113,6 +117,72 @@ new Vue({
     }
   },
   components: { 'vue-select-multi': VueSelect.SelectMulti }
+})
+new Vue({
+  el: '#cascader',
+  template: '<cascader class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</cascader>',
+  data: function () {
+    var options = [
+      {
+        name: 'place 1', value: 1, children: [
+          {
+            name: 'place 2', value: 2, children: [
+              { name: 'place 5', value: 5 },
+              { name: 'place 6', value: 6 },
+              { name: 'place 7', value: 7 },
+            ]
+          },
+          { name: 'place 3', value: 3 },
+          { name: 'place 4', value: 4 },
+        ]
+      },
+      {
+        name: 'place 8', value: 8, children: [
+          {
+            name: 'place 9', value: 9, children: [
+              { name: 'place 12', value: 12 },
+              { name: 'place 13', value: 13 },
+              { name: 'place 14', value: 14 },
+            ]
+          },
+          { name: 'place 10', value: 10 },
+          { name: 'place 11', value: 11 },
+        ]
+      },
+      {
+        name: 'place 15', value: 15, children: [
+          { name: 'place 16', value: 16 },
+        ]
+      },
+      { name: 'place 17', value: 17 },
+    ]
+    return {
+      isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
+      value: [1, 2],
+      options: options,
+      keyword: ''
+    }
+  },
+  computed: {
+    showOptions: function () {
+      return this.keyword ? this.options.filter(this.filter) : this.options
+    }
+  },
+  watch: {
+    value: function (val) {
+      console.log(val)
+    }
+  },
+  methods: {
+    log: function (val) {
+      console.log(val)
+      this.keyword = val
+    },
+    filter(op) {
+      return op.name.toString().indexOf(this.keyword) > -1
+    }
+  },
+  components: { 'cascader': VueSelect.Cascader }
 })
 </script>
 </body>

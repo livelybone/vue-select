@@ -80,8 +80,10 @@ export default {
       const obj = [...a1, ...a2].reduce((pre, item) => {
         const item1 = pre[item.value]
         if (item1 && item1.name !== item.name) {
-          throw new Error('vue-select: the options have conflict items that have the same value')
-        } else if (!item1) pre[item.value] = item
+          throw new Error(`vue-select: the options at same level have conflict items(name: ${item.name} & name: ${item1.name}) that have the same value`)
+        } else if (item1 && (item1.children instanceof Array || item.children instanceof Array)) {
+          pre[item.value] = { ...item, children: this.mergeOptions(item1.children, item.children) }
+        } else pre[item.value] = item
         return pre
       }, {})
       return Object.keys(obj).map(k => obj[k])

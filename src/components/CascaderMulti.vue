@@ -1,5 +1,5 @@
 <template v-if="valid">
-  <div class="select-multi" @click.stop="">
+  <div class="cascader-multi" @click.stop="">
     <div class="value values" @click.stop="optionsHidden=false;$refs.input.focus()">
       <div v-for="(o, i) in selected" class="val" :key="i">
         <span class="v" v-html="o.name"></span>
@@ -20,11 +20,12 @@
 </template>
 
 <script>
+import CascaderMixin from '../common/CascaderMixin'
 import Mixin from '../common/Mixin'
 import Options from '../common/Options.vue'
 
 export default {
-  mixins: [Mixin],
+  mixins: [Mixin, CascaderMixin],
   props: {
     value: {
       default() {

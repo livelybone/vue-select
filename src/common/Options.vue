@@ -5,8 +5,8 @@
          class="option"
          :class="{selected:o.selected}"
          :key="i"
-         v-html="o.name"
-         @click.stop="$emit('select', o.value)"></div>
+         v-html="o.cName||o.name"
+         @click.stop="$emit('select', o)"></div>
     <slot v-if="!options.length"/>
   </scrollbar>
 </template>

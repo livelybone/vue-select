@@ -34,8 +34,8 @@ export default {
     },
   },
   methods: {
-    click(val) {
-      this.$emit('input', val)
+    click({ value }) {
+      this.$emit('input', value)
       this.optionsHidden = true
     },
   },

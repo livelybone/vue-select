@@ -15,6 +15,8 @@ $multi-value-color: #eee;
 
 $option-height: size(3);
 $multi-value-height: size(2.4);
+$scrollbar-wrap-min-width: size(16);
+$option-padding: size(.4);
 
 @import "../../node_modules/vue-scrollbar-live/lib/css/index.css";
 
@@ -84,11 +86,15 @@ $multi-value-height: size(2.4);
   }
 
   &:after {
-    @include pseudo($input-bg, $lr, $bt, calc(size(-.6) + 1px))
+    @include pseudo($input-bg, $lr, $bt, calc(#{size(-.6)} + 1px))
   }
 }
 
-.select-base, .select-multi {
+.split {
+  color: $placeholder;
+}
+
+.select-base, .select-multi, .cascader, .cascader-multi {
   position: relative;
   padding: 0 size(1);
   border: 1px solid $border;
@@ -96,22 +102,75 @@ $multi-value-height: size(2.4);
   background: transparent;
   cursor: pointer;
 
-  &.select-multi {
+  &.select-multi, &.cascader, &.cascader-multi {
 
-    .options .option.selected {
-      color: $main !important;
-      background: transparent !important;
-      font-weight: 600;
+    .options .option {
 
-      .icon-selected {
+      &.selected {
+        color: $main !important;
+        background: transparent !important;
+        font-weight: 600;
+
+        .icon-selected {
+          float: right;
+          position: relative;
+          width: $option-height/2;
+          height: 100%;
+
+          &:before {
+            @include dot($main);
+          }
+        }
+
+        .icon-expand:before {
+          border-top-color: $main;
+        }
+      }
+
+      &:hover {
+        background: $option-hover-bg !important;
+
+        .icon-expand:after {
+          border-top-color: $option-hover-bg;
+        }
+      }
+
+      .icon-expand {
+        display: block;
         float: right;
         position: relative;
-        width: $option-height / 2;
-        height: 100%;
+        top: calc((#{$option-height} - #{size(.5)}) / 2);
+        width: size(1);
+        height: size(.5);
+        transform: rotate(-90deg);
 
         &:before {
-          @include dot($main);
+          @include pseudo($font, left, bottom, 0, 0, size(.5));
         }
+
+        &:after {
+          @include pseudo($input-bg, left, bottom, 1px, 0, size(.5));
+        }
+      }
+    }
+  }
+
+  &.cascader {
+
+    .options {
+      right: auto;
+
+      .scrollbar-wrap {
+        float: left;
+        width: auto;
+        min-width: $scrollbar-wrap-min-width;
+      }
+
+      .line {
+        float: left;
+        width: 1px;
+        margin: -$option-padding 0;
+        background: rgba($border, .5);
       }
     }
   }
@@ -203,7 +262,7 @@ $multi-value-height: size(2.4);
     width: size(1);
     height: size(.5);
     margin: size(-0.25) 0 0;
-    transition: transform .5s ease;
+    transition: transform .3s ease;
 
     &:before {
       @include pseudo($font, left, bottom, 0, 0, size(.5));
@@ -222,7 +281,7 @@ $multi-value-height: size(2.4);
     position: absolute;
     left: -1px;
     right: -1px;
-    padding: size(.4) 0;
+    padding: $option-padding 0;
     z-index: 9999;
     border: 1px solid rgba($border, .5);
     border-radius: size(.3);
