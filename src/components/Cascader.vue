@@ -1,5 +1,5 @@
 <template v-if="valid">
-  <div class="cascader" @click.stop="">
+  <div class="cascader" @click.stop="" ref="cascader">
     <div v-if="!search||optionsHidden" class="value"
          :class="{'placeholder':showSelected.value.length<1}"
          :style="inputWrapStyle" v-html="showSelected.name||_placeholder"
@@ -38,7 +38,7 @@ export default {
     },
     selectedOptions() {
       const selected = this.getSelected(this.showOptions)
-      return selected.map(s => s.children)
+      return selected.map(s => s.children).filter(ops => ops)
     },
     selected() {
       return this.getSelected(this.mergedOptions)
@@ -66,7 +66,8 @@ export default {
     },
     click(val, i = 0) {
       const { value, children } = val
-      this.$set(this.tempVal, i, value)
+      if (i === 0) this.tempVal = [value]
+      else this.$set(this.tempVal, i, value)
       const isEnd = !children
       if (isEnd) {
         this.$emit('input', this.tempVal)

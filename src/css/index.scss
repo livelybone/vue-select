@@ -91,7 +91,7 @@ $option-padding: size(.4);
 }
 
 .split {
-  color: $placeholder;
+  color: $placeholder !important;
 }
 
 .select-base, .select-multi, .cascader, .cascader-multi {
@@ -158,10 +158,14 @@ $option-padding: size(.4);
   &.cascader {
 
     .options {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      flex-wrap: nowrap;
       right: auto;
 
       .scrollbar-wrap {
-        float: left;
         width: auto;
         min-width: $scrollbar-wrap-min-width;
       }

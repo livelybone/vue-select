@@ -13,7 +13,11 @@
   <script src="../lib/index.js"></script>
   <link rel="stylesheet" href="../lib/css/index.css">
   <style>
-
+  .select {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+  }
   </style>
 </head>
 <body>
@@ -64,7 +68,7 @@ new Vue({
       console.log(val)
       this.keyword = val
     },
-    filter(op) {
+    filter: function (op) {
       return op.name.toString().indexOf(this.keyword) > -1
     }
   },
@@ -112,7 +116,7 @@ new Vue({
       console.log(val)
       this.keyword = val
     },
-    filter(op) {
+    filter: function (op) {
       return op.name.toString().indexOf(this.keyword) > -1
     }
   },
@@ -171,19 +175,24 @@ new Vue({
   watch: {
     value: function (val) {
       console.log(val)
-    }
+    },
+    options: function (val) {
+      console.log(val)
+    },
   },
   methods: {
     log: function (val) {
       console.log(val)
       this.keyword = val
     },
-    filter(op) {
+    filter: function (op) {
       return op.name.toString().indexOf(this.keyword) > -1
     }
   },
   components: { 'cascader': VueSelect.Cascader }
 })
+
+new
 </script>
 </body>
 </html>

@@ -57,6 +57,8 @@
     "webpack-command": "^0.2.1"
   },
   "dependencies": {
+    "@livelybone/scroll-get": "^1.0.0",
+    "popper.js": "^1.14.4",
     "vue-scrollbar-live": "^3.1.0"
   }
 }

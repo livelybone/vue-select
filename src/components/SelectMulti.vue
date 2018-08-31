@@ -11,6 +11,7 @@
     </div>
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
     <div v-if="!optionsHidden" class="options" :class="_optionsClass">
+      <!--<div class="popper"></div>-->
       <options :isMobile="isMobile" :maxHeight="maxHeight||'50vh'" :options="showOptions"
                @startDrag="shouldHide=false" @endDrag="endDrag" @select="click">
         <slot/>
@@ -49,7 +50,7 @@ export default {
     html(o) {
       return `${o.name}${this.isSelected(o.value) ? '<span class="icon-selected"></span>' : ''}`
     },
-    click(value) {
+    click({ value }) {
       const index = this.find(Object.keys(this.value), k => this.value[k] === value, -1)
       if (index > -1) {
         this.$emit('input', this.value.slice(0, index).concat(this.value.slice(+index + 1)))
@@ -57,8 +58,8 @@ export default {
         this.$emit('input', this.value.concat([value]))
       }
     },
-    isSelected({value}) {
-      return this.value.some(v => v === value)
+    isSelected(val) {
+      return this.value.some(v => v === val)
     },
   },
   components: { Options },
