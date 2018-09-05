@@ -14,6 +14,7 @@ yarn-error.log*
 *.sln
 
 webpack.*.js
+rollup.*.js
 /src/
 /index.js
 

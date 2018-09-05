@@ -2,13 +2,16 @@
   "name": "@livelybone/vue-select",
   "version": "1.0.0",
   "description": "A vue select component, includes cascader",
-  "main": "./lib/index.js",
+  "main": "./lib/umd/index.js",
+  "module": "./lib/es/index.js",
+  "unpkg": "./lib/umd/index.js",
+  "css_path": "./lib/css/index.css",
+  "scss_path": "./lib/css/index.scss",
   "scripts": {
     "watch:css": "node-sass -w ./src/css/index.scss ./lib/css/index.css",
-    "build:css": "rimraf ./lib/css && node-sass ./src/css/index.scss ./lib/css/index.css --output-style compressed",
-    "build:js": "./node_modules/.bin/webpack  --progress --mode production",
-    "build": "npm run build:css && npm run build:js",
-    "eslint": "./node_modules/.bin/eslint ./src/index.vue",
+    "build:css": "node-sass ./src/css/index.scss ./lib/css/index.css --output-style compressed",
+    "build": "rimraf ./lib && npm run build:css && rollup -c",
+    "eslint": "eslint ./src/index.vue",
     "test": "cross-env BABEL_ENV=test karma start --single-run"
   },
   "repository": {
@@ -31,6 +34,7 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-istanbul": "^4.1.6",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-2": "^6.24.1",
@@ -50,6 +54,12 @@
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^3.0.0",
     "mocha": "^5.2.0",
+    "rollup": "^0.65.0",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-commonjs": "^9.1.6",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-uglify": "^5.0.2",
+    "rollup-plugin-vue": "^4.3.2",
     "vue": "^2.5.16",
     "vue-loader": "^15.2.4",
     "vue-template-compiler": "^2.5.16",
@@ -57,8 +67,7 @@
     "webpack-command": "^0.2.1"
   },
   "dependencies": {
-    "@livelybone/scroll-get": "^1.0.0",
-    "popper.js": "^1.14.4",
-    "vue-scrollbar-live": "^3.1.0"
+    "@livelybone/scroll-get": "^2.0.0",
+    "vue-scrollbar-live": "^4.1.0"
   }
 }

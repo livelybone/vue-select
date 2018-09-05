@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Scrollbar from 'vue-scrollbar-live'
+import VueScrollbar from 'vue-scrollbar-live'
 import { find } from './find'
 
 export default {
@@ -29,6 +29,6 @@ export default {
     return { scrollTo: 0 }
   },
   methods: {},
-  components: { Scrollbar },
+  components: { 'scrollbar': VueScrollbar },
 }
 </script>

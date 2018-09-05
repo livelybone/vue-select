@@ -1,4 +1,11 @@
-exports.SelectBase = require('./components/SelectBase.vue').default
-exports.SelectMulti = require('./components/SelectMulti.vue').default
-exports.Cascader = require('./components/Cascader.vue').default
-exports.CascaderMulti = require('./components/CascaderMulti.vue').default
+import Cascader from './components/Cascader.vue'
+import CascaderMulti from './components/CascaderMulti.vue'
+import SelectBase from './components/SelectBase.vue'
+import SelectMulti from './components/SelectMulti.vue'
+
+export {
+  SelectBase,
+  SelectMulti,
+  Cascader,
+  CascaderMulti,
+}

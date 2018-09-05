@@ -1,4 +1,4 @@
-import { posRelativeToPage } from '@livelybone/scroll-get'
+import * as ScrollGet from '@livelybone/scroll-get'
 
 /**
  * @props {Array} options
@@ -10,7 +10,12 @@ export default {
   },
   props: {
     value: Array,
-    options: Array,
+    options: {
+      default() {
+        return []
+      },
+      type: Array,
+    },
   },
   computed: {
     _lineStyle() {
@@ -42,13 +47,13 @@ export default {
     },
     listenOptionsStyle() {
       if (this.$refs.optionsEl) {
-        const { pageLeft } = posRelativeToPage(this.$refs.cascader)
+        const { pageLeft } = ScrollGet.posRelativeToPage(this.$refs.cascader)
         const { clientHeight, clientWidth } = this.$refs.optionsEl
         if (clientHeight && this.optionsHeight !== clientHeight) {
           this.optionsHeight = clientHeight
         }
         if (pageLeft + clientWidth >= document.body.clientWidth - 10) {
-          this.
+          // this.
         }
       }
     },

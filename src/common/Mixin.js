@@ -10,7 +10,12 @@ export default {
   props: {
     isMobile: Boolean,
     id: String,
-    options: Array,
+    options: {
+      default() {
+        return []
+      },
+      type: Array,
+    },
     maxHeight: String,
     canEdit: {
       default: true,
