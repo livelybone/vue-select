@@ -3,7 +3,7 @@
     <div class="value values" @click.stop="optionsHidden=false;$refs.input.focus()">
       <div v-for="(o, i) in selected" class="val" :key="i">
         <span class="v" v-html="o.name"></span>
-        <span class="icon-del" @click.stop="click(o.value)"></span>
+        <span class="icon-del" @click.stop="click(o)"></span>
       </div>
       <input v-if="search" v-model="inputVal" class="input val"
              :placeholder="_searchPlaceholder" ref="input">
@@ -50,7 +50,7 @@ export default {
     html(o) {
       return `${o.name}${this.isSelected(o.value) ? '<span class="icon-selected"></span>' : ''}`
     },
-    click(value) {
+    click({ value }) {
       const index = this.find(Object.keys(this.value), k => this.value[k] === value, -1)
       if (index > -1) {
         this.$emit('input', this.value.slice(0, index).concat(this.value.slice(+index + 1)))

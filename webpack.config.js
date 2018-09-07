@@ -17,7 +17,7 @@ const config = {
       commonjs: 'vue-scrollbar-live',
       commonjs2: 'vue-scrollbar-live',
       amd: 'vue-scrollbar-live',
-      root: 'VueScrollBar',
+      root: 'VueScrollbar',
     },
   },
   module: {

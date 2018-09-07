@@ -3,7 +3,7 @@
     <div class="value values" @click.stop="optionsHidden=false;$refs.input.focus()">
       <div v-for="(o, i) in selected" class="val" :key="i">
         <span class="v" v-html="o.name"></span>
-        <span class="icon-del" @click.stop="click(o.value)"></span>
+        <span class="icon-del" @click.stop="click(o)"></span>
       </div>
       <input v-if="search" v-model="inputVal" class="input val"
              :placeholder="_searchPlaceholder" ref="input">

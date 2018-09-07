@@ -5,7 +5,7 @@ $placeholder: #aaa;
 $select: #fff;
 $input-bg: #fff;
 $base-size: 10px;
-$option-hover-bg: lighten($main, 20%);
+$option-hover-bg: lighten($main, 50%);
 $shadow: rgba(0, 0, 0, .1);
 $multi-value-color: #eee;
 
@@ -155,7 +155,7 @@ $option-padding: size(.4);
     }
   }
 
-  &.cascader {
+  &.cascader, &.cascader-multi {
 
     .options {
       display: -webkit-box;
@@ -168,6 +168,13 @@ $option-padding: size(.4);
       .scrollbar-wrap {
         width: auto;
         min-width: $scrollbar-wrap-min-width;
+      }
+
+      .option {
+
+        &.selected {
+          font-weight: 500;
+        }
       }
 
       .line {
@@ -313,13 +320,13 @@ $option-padding: size(.4);
       line-height: $option-height;
       padding: 0 size(1);
 
+      &:hover {
+        background: $option-hover-bg !important;
+      }
+
       &.selected {
         color: $select !important;
         background: $main !important;
-      }
-
-      &:hover {
-        background: $option-hover-bg !important;
       }
     }
   }

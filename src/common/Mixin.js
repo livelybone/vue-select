@@ -66,6 +66,11 @@ export default {
     },
   },
   methods: {
+    show() {
+      this.optionsHidden = false
+      if (this.search) this.$nextTick(() => this.$refs.input.focus())
+      if ('tempVal' in this) this.tempVal = [...this.value]
+    },
     hide() {
       if (this.shouldHide) {
         this.optionsHidden = true

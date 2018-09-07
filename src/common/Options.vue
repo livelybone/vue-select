@@ -6,6 +6,7 @@
          :class="{selected:o.selected}"
          :key="i"
          v-html="o.cName||o.name"
+         @mouseenter="$emit('hover', o)"
          @click.stop="$emit('select', o)"></div>
     <slot v-if="!options.length"/>
   </scrollbar>

@@ -68,6 +68,7 @@
   },
   "dependencies": {
     "@livelybone/scroll-get": "^2.0.0",
-    "vue-scrollbar-live": "^4.1.0"
+    "popper.js": "^1.14.4",
+    "vue-scrollbar-live": "^4.3.0"
   }
 }
