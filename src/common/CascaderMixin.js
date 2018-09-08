@@ -1,5 +1,3 @@
-import * as ScrollGet from '@livelybone/scroll-get'
-
 /**
  * @prop {Array} options
  *    example: [{name: 'a', value:'1', children: [{name:'a1', value:'11', children:[...]}]}]
@@ -37,6 +35,7 @@ export default {
       tempVal: [],
       optionsHeight: 0,
       optionsRight: 0,
+      positionFixed: true,
     }
   },
   watch: {
@@ -46,6 +45,7 @@ export default {
       }
     },
     selectedOptions(val) {
+      console.log(val)
       if (val) {
         this.listenOptionsStyle()
       }
@@ -57,13 +57,9 @@ export default {
     },
     listenOptionsStyle() {
       if (this.$refs.optionsEl) {
-        const { pageLeft } = ScrollGet.posRelativeToPage(this.$refs.cascader)
-        const { clientHeight, clientWidth } = this.$refs.optionsEl
+        const { clientHeight } = this.$refs.optionsEl.$el
         if (clientHeight && this.optionsHeight !== clientHeight) {
           this.optionsHeight = clientHeight
-        }
-        if (pageLeft + clientWidth >= document.body.clientWidth - 10) {
-          // this.
         }
       }
     },

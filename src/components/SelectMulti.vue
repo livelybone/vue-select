@@ -1,5 +1,5 @@
 <template v-if="valid">
-  <div class="select-multi" @click.stop="">
+  <div class="select-multi" @click.stop="" ref="wrap">
     <div class="value values" @click.stop="optionsHidden=false;$refs.input.focus()">
       <div v-for="(o, i) in selected" class="val" :key="i">
         <span class="v" v-html="o.name"></span>
@@ -10,19 +10,19 @@
       <span v-else-if="selected.length>0" class="val placeholder">{{_placeholder}}</span>
     </div>
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
-    <div v-if="!optionsHidden" class="options" :class="_optionsClass">
-      <!--<div class="popper"></div>-->
+    <popper v-if="!optionsHidden" class="options" :referenceElm="$refs.wrap"
+            :popperOptions="_popperProps.popperOptions" :arrowPosition="_popperProps.arrowPosition"
+            :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
       <options :isMobile="isMobile" :maxHeight="maxHeight||'50vh'" :options="showOptions"
                @startDrag="shouldHide=false" @endDrag="endDrag" @select="click">
         <slot/>
       </options>
-    </div>
+    </popper>
   </div>
 </template>
 
 <script>
 import Mixin from '../common/Mixin'
-import Options from '../common/Options.vue'
 
 export default {
   mixins: [Mixin],
@@ -62,6 +62,5 @@ export default {
       return this.value.some(v => v === val)
     },
   },
-  components: { Options },
 }
 </script>

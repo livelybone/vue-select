@@ -1,5 +1,5 @@
 <template v-if="valid">
-  <div class="cascader" @click.stop="" ref="cascader">
+  <div class="cascader" @click.stop="" ref="wrap">
     <div v-if="!search||optionsHidden" class="value"
          :class="{'placeholder':showSelected.value.length<1}"
          :style="inputWrapStyle" v-html="showSelected.name||_placeholder"
@@ -7,7 +7,10 @@
     <input v-if="search" v-show="!optionsHidden" class="input" v-model="inputVal"
            :style="inputWrapStyle" :placeholder="_searchPlaceholder" ref="input">
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
-    <div v-if="!optionsHidden" class="options" :class="_optionsClass" ref="optionsEl">
+    <popper v-if="!optionsHidden" class="options" ref="optionsEl"
+            :referenceElm="$refs.wrap" :popperOptions="_popperProps.popperOptions"
+            :arrowPosition="_popperProps.arrowPosition"
+            :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
       <options :isMobile="isMobile" :maxHeight="maxHeight||'50vh'" :options="showOptions"
                @startDrag="shouldHide=false" @endDrag="endDrag"
                @select="click($event, 0)" @hover="hover($event, 0)">
@@ -21,14 +24,13 @@
           <slot :name="i"/>
         </options>
       </template>
-    </div>
+    </popper>
   </div>
 </template>
 
 <script>
 import CascaderMixin from '../common/CascaderMixin'
 import Mixin from '../common/Mixin'
-import Options from '../common/Options.vue'
 
 export default {
   mixins: [Mixin, CascaderMixin],
@@ -85,6 +87,5 @@ export default {
       return op.value === val
     },
   },
-  components: { Options },
 }
 </script>

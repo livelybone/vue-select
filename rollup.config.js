@@ -28,12 +28,12 @@ const conf = entry => Object.assign({}, baseConf, {
     format,
     name: entry.name === 'index' ? 'VueSelect' : entry.name,
   })),
-  external: ['vue-scrollbar-live', '@livelybone/scroll-get'],
+  external: entry.external ? ['vue-scrollbar-live', '@livelybone/vue-popper'] : [],
   plugins: baseConf.plugins.concat([(entry.needUglify !== false && uglify())]),
 })
 
 export default [
-  { name: 'index', filename: './src/index.js', formats: ['es'], needUglify: false },
+  { name: 'index', filename: './src/index.js', formats: ['es'], needUglify: false, external: true },
   { name: 'index', filename: './src/index.js', formats: ['umd'] },
   ...getEntries(),
 ].map(conf)

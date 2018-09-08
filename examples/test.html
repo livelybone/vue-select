@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>vue-select</title>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="../node_modules/@livelybone/mouse-wheel/lib/umd/index.js"></script>
-  <script src="../node_modules/@livelybone/meta-scale/lib/umd/index.js"></script>
-  <script src="../node_modules/@livelybone/simple-observer/lib/umd/index.js"></script>
-  <script src="../node_modules/@livelybone/touch/lib/umd/index.js"></script>
-  <script src="../node_modules/@livelybone/scroll-get/lib/umd/index.js"></script>
-  <script src="../node_modules/vue-scrollbar-live/lib/umd/index.js"></script>
   <script src="../lib/umd/index.js"></script>
   <link rel="stylesheet" href="../lib/css/index.css">
   <style>
@@ -21,21 +15,29 @@
   }
   </style>
 </head>
-<body>
+<body style="padding:100vh 20px; margin:0">
 <div id="datetime-picker"></div>
 <div id="multi"></div>
 <div id="cascader"></div>
-<input type="text">
+<div id="cascader-multi"></div>
 <!--<button onclick="console.log('button',1)">点击</button>-->
 <script type="text/javascript">
 console.log(VueSelect)
+var isMobile = /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent)
+var popperProps = {
+  popperOptions: {
+    modifiers: {
+      preventOverflow: { padding: 20 },
+    },
+  },
+}
 
 new Vue({
   el: '#datetime-picker',
-  template: '<vue-select class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</vue-select>',
+  template: '<vue-select class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" :popperProps="popperProps" maxHeight="30vh" @search="log">无结果</vue-select>',
   data: function () {
     return {
-      isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
+      isMobile: isMobile,
       value: 1,
       options: [
         { name: 'place 1', value: 1 },
@@ -56,13 +58,14 @@ new Vue({
         { name: 'place 16', value: 16 },
         { name: 'place 17', value: 17 },
       ],
-      keyword: ''
+      keyword: '',
+      popperProps: popperProps,
     }
   },
   computed: {
     showOptions: function () {
       return this.keyword ? this.options.filter(this.filter) : this.options
-    }
+    },
   },
   methods: {
     log: function (val) {
@@ -71,13 +74,13 @@ new Vue({
     },
     filter: function (op) {
       return op.name.toString().indexOf(this.keyword) > -1
-    }
+    },
   },
-  components: { 'vue-select': VueSelect.SelectBase }
+  components: { 'vue-select': VueSelect.SelectBase },
 })
 new Vue({
   el: '#multi',
-  template: '<vue-select-multi class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :search="true" maxHeight="30vw" @search="log">无结果</vue-select-multi>',
+  template: '<vue-select-multi class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :popperProps="popperProps" :search="true" maxHeight="30vh" @search="log">无结果</vue-select-multi>',
   data: function () {
     var options = [
       { name: 'place 1', value: 1 },
@@ -99,18 +102,19 @@ new Vue({
       { name: 'place 17', value: 17 },
     ]
     return {
-      isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
+      isMobile:isMobile,
       value: options.map(function (o) {
         return o.value
       }),
       options: options,
-      keyword: ''
+      keyword: '',
+      popperProps: popperProps,
     }
   },
   computed: {
     showOptions: function () {
       return this.keyword ? this.options.filter(this.filter) : this.options
-    }
+    },
   },
   methods: {
     log: function (val) {
@@ -119,13 +123,13 @@ new Vue({
     },
     filter: function (op) {
       return op.name.toString().indexOf(this.keyword) > -1
-    }
+    },
   },
-  components: { 'vue-select-multi': VueSelect.SelectMulti }
+  components: { 'vue-select-multi': VueSelect.SelectMulti },
 })
 new Vue({
   el: '#cascader',
-  template: '<cascader class="select" :isMobile="isMobile" v-model="value" :options="showOptions" expandType="hover" changeOnSelect :search="false" maxHeight="30vw" @search="log">无结果</cascader>',
+  template: '<cascader class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :popperProps="popperProps" expandType="hover" changeOnSelect :search="false" maxHeight="30vh" @search="log">无结果</cascader>',
   data: function () {
     var options = [
       {
@@ -135,11 +139,11 @@ new Vue({
               { name: 'place 5', value: 5 },
               { name: 'place 6', value: 6 },
               { name: 'place 7', value: 7 },
-            ]
+            ],
           },
           { name: 'place 3', value: 3 },
           { name: 'place 4', value: 4 },
-        ]
+        ],
       },
       {
         name: 'place 8', value: 8, children: [
@@ -148,30 +152,31 @@ new Vue({
               { name: 'place 12', value: 12 },
               { name: 'place 13', value: 13 },
               { name: 'place 14', value: 14 },
-            ]
+            ],
           },
           { name: 'place 10', value: 10 },
           { name: 'place 11', value: 11 },
-        ]
+        ],
       },
       {
         name: 'place 15', value: 15, children: [
           { name: 'place 16', value: 16 },
-        ]
+        ],
       },
       { name: 'place 17', value: 17 },
     ]
     return {
-      isMobile: /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent),
+      isMobile: isMobile,
       value: [1, 2],
       options: options,
-      keyword: ''
+      keyword: '',
+      popperProps: popperProps,
     }
   },
   computed: {
     showOptions: function () {
       return this.keyword ? this.options.filter(this.filter) : this.options
-    }
+    },
   },
   watch: {
     value: function (val) {
@@ -188,9 +193,79 @@ new Vue({
     },
     filter: function (op) {
       return op.name.toString().indexOf(this.keyword) > -1
+    },
+  },
+  components: { 'cascader': VueSelect.Cascader },
+})
+new Vue({
+  el: '#cascader-multi',
+  template: '<cascader-multi class="select" :isMobile="isMobile" v-model="value" :options="showOptions" :popperProps="popperProps" expandType="hover" changeOnSelect :search="false" maxHeight="30vh" @search="log">无结果</cascader-multi>',
+  data: function () {
+    var options = [
+      {
+        name: 'place 1', value: 1, children: [
+          {
+            name: 'place 2', value: 2, children: [
+              { name: 'place 5', value: 5 },
+              { name: 'place 6', value: 6 },
+              { name: 'place 7', value: 7 },
+            ],
+          },
+          { name: 'place 3', value: 3 },
+          { name: 'place 4', value: 4 },
+        ],
+      },
+      {
+        name: 'place 8', value: 8, children: [
+          {
+            name: 'place 9', value: 9, children: [
+              { name: 'place 12', value: 12 },
+              { name: 'place 13', value: 13 },
+              { name: 'place 14', value: 14 },
+            ],
+          },
+          { name: 'place 10', value: 10 },
+          { name: 'place 11', value: 11 },
+        ],
+      },
+      {
+        name: 'place 15', value: 15, children: [
+          { name: 'place 16', value: 16 },
+        ],
+      },
+      { name: 'place 17', value: 17 },
+    ]
+    return {
+      isMobile: isMobile,
+      value: [1, 2],
+      options: options,
+      keyword: '',
+      popperProps: popperProps,
     }
   },
-  components: { 'cascader': VueSelect.Cascader }
+  computed: {
+    showOptions: function () {
+      return this.keyword ? this.options.filter(this.filter) : this.options
+    },
+  },
+  watch: {
+    value: function (val) {
+      console.log(val)
+    },
+    options: function (val) {
+      console.log(val)
+    },
+  },
+  methods: {
+    log: function (val) {
+      console.log(val)
+      this.keyword = val
+    },
+    filter: function (op) {
+      return op.name.toString().indexOf(this.keyword) > -1
+    },
+  },
+  components: { 'cascader-multi': VueSelect.CascaderMulti },
 })
 
 </script>

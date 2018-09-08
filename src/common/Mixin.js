@@ -1,4 +1,14 @@
+import VuePopper from '@livelybone/vue-popper'
+import Options from '../common/Options.vue'
 import { find } from './find'
+
+const defaultPopperProps = {
+  arrowPosition: 'start',
+  arrowOffsetScaling: 1,
+  popperOptions: {
+    placement: 'bottom-start',
+  },
+}
 
 export default {
   beforeMount() {
@@ -25,7 +35,7 @@ export default {
     placeholder: String,
     searchPlaceholder: String,
     inputWrapStyle: Object,
-    optionsClass: String,
+    popperProps: Object,
   },
   data() {
     return {
@@ -42,9 +52,6 @@ export default {
     _searchPlaceholder() {
       return this.searchPlaceholder || '搜索'
     },
-    _optionsClass() {
-      return /^(left|right)-(top|bottom)$/.test(this.optionsClass) ? this.optionsClass : 'left-bottom'
-    },
     valid() {
       let valid = true
       valid = !this.options || !this.options.every(item => item.name && item.value !== undefined)
@@ -52,6 +59,18 @@ export default {
         throw new Error('vue-select: Prop options is invalid! Right example: [{name: "option", value: 1}]')
       }
       return valid
+    },
+    _popperProps() {
+      const { popperOptions } = this.popperProps || {}
+      return {
+        ...defaultPopperProps,
+        ...this.popperProps,
+        popperOptions: {
+          ...defaultPopperProps.popperOptions,
+          ...popperOptions,
+          positionFixed: !!this.positionFixed,
+        },
+      }
     },
   },
   watch: {
@@ -99,4 +118,5 @@ export default {
       return Object.keys(obj).map(k => obj[k])
     },
   },
+  components: { Options, 'popper': VuePopper },
 }

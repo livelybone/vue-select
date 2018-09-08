@@ -1,5 +1,5 @@
 <template v-if="valid">
-  <div class="select-base" @click.stop="">
+  <div class="select-base" @click.stop="" ref="wrap">
     <div v-if="!search||optionsHidden" class="value"
          :class="{'placeholder':!selected.value&&selected.value!==0}"
          :style="inputWrapStyle" v-html="selected.name||_placeholder"
@@ -7,18 +7,19 @@
     <input v-if="search" v-show="!optionsHidden" class="input" v-model="inputVal"
            :style="inputWrapStyle" :placeholder="_searchPlaceholder" ref="input">
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
-    <div v-if="!optionsHidden" class="options" :class="_optionsClass">
+    <popper v-if="!optionsHidden" class="options" :referenceElm="$refs.wrap"
+            :popperOptions="_popperProps.popperOptions" :arrowPosition="_popperProps.arrowPosition"
+            :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
       <options :isMobile="isMobile" :maxHeight="maxHeight||'50vh'" :options="showOptions"
                @startDrag="shouldHide=false" @endDrag="endDrag" @select="click">
         <slot/>
       </options>
-    </div>
+    </popper>
   </div>
 </template>
 
 <script>
 import Mixin from '../common/Mixin'
-import Options from '../common/Options.vue'
 
 export default {
   mixins: [Mixin],
@@ -39,6 +40,5 @@ export default {
       this.optionsHidden = true
     },
   },
-  components: { Options },
 }
 </script>

@@ -18,8 +18,6 @@ $multi-value-height: size(2.4);
 $scrollbar-wrap-min-width: size(16);
 $option-padding: size(.4);
 
-@import "../../node_modules/vue-scrollbar-live/lib/css/index.css";
-
 @mixin placeholder($color:$placeholder) {
   &::-webkit-input-placeholder { /* WebKit browsers */
     color: $color;
@@ -35,24 +33,6 @@ $option-padding: size(.4);
 
   &:-ms-input-placeholder { /* Internet Explorer 10+ */
     color: $color;
-  }
-}
-
-@mixin pseudo($bg:$border, $lr: left, $bt: top, $btVal: size(-.5), $lrVal: size(2), $borderWidth: size(.6)) {
-  content: '';
-  position: absolute;
-  #{$lr}: $lrVal;
-  #{$bt}: $btVal;
-  width: 0;
-  height: 0;
-  border: $borderWidth solid transparent;
-
-  @if ($bt==top) {
-    border-top: 0;
-    border-bottom-color: $bg;
-  } @else {
-    border-bottom: 0;
-    border-top-color: $bg;
   }
 }
 
@@ -78,15 +58,81 @@ $option-padding: size(.4);
   background: $color;
 }
 
-@mixin selectItem($lr:left, $bt: bottom) {
-  #{$bt}: calc(100% + #{$base-size});
+/* scrollbar css */
+.scrollbar-wrap {
+  position: relative;
+  width: 100%;
+  padding: 0 !important;
+  overflow: hidden;
 
-  &:before {
-    @include pseudo(rgba($border, .5), $lr, $bt, size(-.6))
+  &:hover .scrollbar {
+    display: block
   }
 
-  &:after {
-    @include pseudo($input-bg, $lr, $bt, calc(#{size(-.6)} + 1px))
+  .scrollbar-content {
+    position: relative;
+    width: 100%;
+    height: auto
+  }
+
+  .scrollbar {
+    display: none;
+    position: absolute;
+    right: 4px;
+    width: 4px;
+    border-radius: 2px;
+    background: #eee;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+    cursor: default !important
+  }
+}
+
+/* popper css */
+$bg: $input-bg;
+$pseudoSize: size(.6);
+
+@mixin pseudo($bg:$border, $direction: top, $borderWidth: $pseudoSize) {
+  position: absolute;
+  #{$direction}: -$pseudoSize;
+  width: 0;
+  height: 0;
+  border: $borderWidth solid transparent;
+
+  @if ($direction==top) {
+    border-top: 0;
+    border-bottom-color: $bg;
+  } @else if ($direction==bottom) {
+    border-bottom: 0;
+    border-top-color: $bg;
+  } @else if ($direction==left) {
+    border-left: 0;
+    border-right-color: $bg;
+  } @else if ($direction==right) {
+    border-right: 0;
+    border-left-color: $bg;
+  }
+}
+
+.vue-popper {
+  border: 1px solid rgba($border, .5);
+  border-radius: size(.3);
+  background: $bg;
+
+  @each $placement, $pos, $pseudoPos in (top, bottom, left), (bottom, top, left), (left, right, top), (right, left, top) {
+    &[x-placement^=#{$placement}] {
+      margin-#{$pos}: size(1);
+
+      .arrow {
+        @include pseudo(rgba($border, .5), $pos);
+
+        &:before {
+          content: '';
+          @include pseudo($bg, $pos);
+          #{$pseudoPos}: -$pseudoSize;
+          #{$pos}: 1px;
+        }
+      }
+    }
   }
 }
 
@@ -123,7 +169,7 @@ $option-padding: size(.4);
         }
 
         .icon-expand:before {
-          border-top-color: $main;
+          border-left-color: $main;
         }
       }
 
@@ -131,7 +177,7 @@ $option-padding: size(.4);
         background: $option-hover-bg !important;
 
         .icon-expand:after {
-          border-top-color: $option-hover-bg;
+          border-left-color: $option-hover-bg;
         }
       }
 
@@ -142,14 +188,17 @@ $option-padding: size(.4);
         top: calc((#{$option-height} - #{size(.5)}) / 2);
         width: size(1);
         height: size(.5);
-        transform: rotate(-90deg);
 
         &:before {
-          @include pseudo($font, left, bottom, 0, 0, size(.5));
+          content: '';
+          @include pseudo($font, right, size(.5));
+          right: 0;
         }
 
         &:after {
-          @include pseudo($input-bg, left, bottom, 1px, 0, size(.5));
+          content: '';
+          @include pseudo($input-bg, right, size(.5));
+          right: 1px;
         }
       }
     }
@@ -162,8 +211,8 @@ $option-padding: size(.4);
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
-      flex-wrap: nowrap;
       right: auto;
+      width: auto;
 
       .scrollbar-wrap {
         width: auto;
@@ -276,11 +325,15 @@ $option-padding: size(.4);
     transition: transform .3s ease;
 
     &:before {
-      @include pseudo($font, left, bottom, 0, 0, size(.5));
+      content: '';
+      @include pseudo($font, bottom, size(.5));
+      bottom: 0;
     }
 
     &:after {
-      @include pseudo($input-bg, left, bottom, 1px, 0, size(.5));
+      content: '';
+      @include pseudo($input-bg, bottom, size(.5));
+      bottom: 1px;
     }
 
     &.reverse {
@@ -289,31 +342,10 @@ $option-padding: size(.4);
   }
 
   .options {
-    position: absolute;
-    left: -1px;
-    right: -1px;
+    width: 100%;
     padding: $option-padding 0;
     z-index: 9999;
-    border: 1px solid rgba($border, .5);
-    border-radius: size(.3);
     box-shadow: 0 1px size(1) $shadow;
-    background: $input-bg;
-
-    &.left-bottom {
-      @include selectItem(left, top)
-    }
-
-    &.left-top {
-      @include selectItem(left, bottom)
-    }
-
-    &.right-bottom {
-      @include selectItem(right, top)
-    }
-
-    &.right-top {
-      @include selectItem(right, bottom)
-    }
 
     .option {
       height: $option-height;
