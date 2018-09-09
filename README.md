@@ -68,36 +68,35 @@ const defaultPopperProps = {
 ```
 
 ### SelectBase
-| Name              | Type                  | DefaultValue                                 | Description  |
-| ----------------- | --------------------- | -------------------------------------------- | ------------ |
-| `value`           | `[String, Number]`    | none   |  |
-| `inputWrapStyle`  | `Object`              | none   | input wrap style |
+| Name              | Type                  | DefaultValue          | Description  |
+| ----------------- | --------------------- | --------------------- | ------------ |
+| `value`           | `[String, Number]`    | none                  |  |
+| `inputWrapStyle`  | `Object`              | none                  | input wrap style |
 
 ### SelectMulti
-| Name          | Type                  | DefaultValue                                 | Description  |
-| ------------- | --------------------- | -------------------------------------------- | ------------ |
-| `value`           | `Array`           | none   |  |
+| Name              | Type                  | DefaultValue          | Description  |
+| ----------------- | --------------------- | --------------------- | ------------ |
+| `value`           | `Array`               | none                  |  |
 
 ### Cascader
-| Name              | Type                  | DefaultValue                                 | Description  |
-| ----------------- | --------------------- | -------------------------------------------- | ------------ |
-| `value`           | `Array`               | none          |  |
-| `expandType`      | `String`              | `click`       | Options: `['click', 'hover']`. Set how to expand children options |
-| `changeOnSelect`  | `Boolean`             | `false`       | If set to true, options of all level can be selected |
-| `inputWrapStyle`  | `Object`              | none          | input wrap style |
+| Name              | Type                  | DefaultValue          | Description  |
+| ----------------- | --------------------- | --------------------- | ------------ |
+| `value`           | `Array`               | none                  |  |
+| `expandType`      | `String`              | `click`               | Options: `['click', 'hover']`. Set how to expand children options |
+| `changeOnSelect`  | `Boolean`             | `false`               | If set to true, options of all level can be selected |
+| `inputWrapStyle`  | `Object`              | none                  | input wrap style |
 
 ### CascaderMulti
-| Name              | Type                  | DefaultValue                                 | Description  |
-| ----------------- | --------------------- | -------------------------------------------- | ------------ |
-| `value`           | `Array`               | none          |  |
-| `expandType`      | `String`              | `click`       | Options: `['click', 'hover']`. Set how to expand children options |
-| `changeOnSelect`  | `Boolean`             | `false`       | If set to true, options of all level can be selected |
+| Name              | Type                  | DefaultValue          | Description  |
+| ----------------- | --------------------- | --------------------- | ------------ |
+| `value`           | `Array`               | none                  |  |
+| `expandType`      | `String`              | `click`               | Options: `['click', 'hover']`. Set how to expand children options |
 
 ## Events
-| Name                  | EmittedData           | Description                                       |
-| --------------------- | --------------------- | ------------------------------------------------- |
-| `input`               | `String`              | |
-| `search`              | `String`              | |
+| Name              | EmittedData           | Description                                       |
+| ----------------- | --------------------- | ------------------------------------------------- |
+| `input`           | `[Array, String]`     |  |
+| `search`          | `String`              |  |
 
 ## style
 For building style, you can use the css or scss file in lib directory. 

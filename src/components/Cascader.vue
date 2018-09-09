@@ -35,14 +35,13 @@ import Mixin from '../common/Mixin'
 export default {
   mixins: [Mixin, CascaderMixin],
   props: {
+    changeOnSelect: Boolean,
     inputWrapStyle: Object,
   },
   computed: {
-    selected() {
-      return this.getSelected(this.mergedOptions, this.value)
-    },
     showSelected() {
-      return this.selected.reduce((pre, item) => {
+      const selected = this.getSelected(this.mergedOptions, this.value)
+      return selected.reduce((pre, item) => {
         if (pre.name) pre.name += ` <span class="split">/</span> ${item.name}`
         else pre.name = item.name
         pre.value.push(item.value)
@@ -51,27 +50,27 @@ export default {
     },
   },
   methods: {
-    init() {
+    initTemp() {
       this.tempVal = [...this.value]
     },
-    setSelect(op, valArr, index) {
+    setSelect(op, index) {
       return {
         ...op,
-        selected: this.isSelected(op, valArr[index]),
+        selected: this.isSelected(op, this.tempVal[index]),
         ...(op.children instanceof Array
           ? {
-            children: op.children.map(child => this.setSelect(child, valArr, index + 1)),
+            children: op.children.map(child => this.setSelect(child, index + 1)),
             cName: `${op.name}<span class="icon-expand"></span>`,
           } : {}),
       }
     },
     click(option, i = 0, isHover = false) {
-      const { value, children } = option
+      const { value } = option
       if (this.tempVal[i] !== value) {
         if (i === 0) this.tempVal = [value]
         else this.$set(this.tempVal, i, value)
       }
-      const isEnd = !children
+      const isEnd = this.isEnd(option)
       if ((this.changeOnSelect || isEnd) && !isHover) {
         this.$emit('input', [...this.tempVal])
         if (isEnd) this.optionsHidden = true
@@ -85,9 +84,6 @@ export default {
           this.$set(this.tempVal, i, '')
         }
       }
-    },
-    isSelected(op, val) {
-      return op.value === val
     },
   },
 }

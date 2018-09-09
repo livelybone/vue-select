@@ -250,10 +250,10 @@ $pseudoSize: size(.6);
     padding: 0;
     border: none;
     cursor: pointer;
+  }
 
-    &.placeholder {
-      color: $placeholder;
-    }
+  .placeholder {
+    color: $placeholder;
   }
 
   .input {
@@ -282,6 +282,10 @@ $pseudoSize: size(.6);
     white-space: nowrap;
     vertical-align: top;
 
+    &.input, &.placeholder {
+      background: transparent;
+    }
+
     .v {
       float: left;
       font-size: size(1.2)
@@ -307,10 +311,6 @@ $pseudoSize: size(.6);
       &:after {
         transform: rotate(-45deg);
       }
-    }
-
-    &.input {
-      background: transparent;
     }
   }
 

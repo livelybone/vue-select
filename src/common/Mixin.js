@@ -92,9 +92,13 @@ export default {
   },
   methods: {
     show() {
-      this.optionsHidden = false
-      if (this.search) this.$nextTick(() => this.$refs.input.focus())
-      if ('tempVal' in this) this.tempVal = [...this.value]
+      if (this.optionsHidden) {
+        this.optionsHidden = false
+        if (this.canSearch) this.$nextTick(() => this.$refs.input.focus())
+        if ('initTemp' in this) this.initTemp()
+      } else {
+        this.hide()
+      }
     },
     hide() {
       if (this.shouldHide) {

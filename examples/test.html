@@ -80,7 +80,7 @@ new Vue({
 })
 new Vue({
   el: '#multi',
-  template: '<vue-select-multi class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :popperProps="popperProps" :canSearch="true" @search="log">无结果</vue-select-multi>',
+  template: '<vue-select-multi class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :popperProps="popperProps" :canSearch="false" @search="log">无结果</vue-select-multi>',
   data: function () {
     var options = [
       { name: 'place 1', value: 1 },
@@ -129,7 +129,7 @@ new Vue({
 })
 new Vue({
   el: '#cascader',
-  template: '<cascader class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :popperProps="popperProps" expandType="hover" changeOnSelect :canSearch="false" @search="log">无结果</cascader>',
+  template: '<cascader class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :popperProps="popperProps" expandType="hover" changeOnSelect :canSearch="true" @search="log">无结果</cascader>',
   data: function () {
     var options = [
       {
@@ -199,7 +199,7 @@ new Vue({
 })
 new Vue({
   el: '#cascader-multi',
-  template: '<cascader-multi class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :popperProps="popperProps" expandType="hover" changeOnSelect :canSearch="false" @search="log">无结果</cascader-multi>',
+  template: '<cascader-multi class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :popperProps="popperProps" expandType="click" :canSearch="true" @search="log">无结果</cascader-multi>',
   data: function () {
     var options = [
       {
@@ -237,7 +237,7 @@ new Vue({
     ]
     return {
       isMobile: isMobile,
-      value: [[1, 2], [8, 9]],
+      value: [[1, 2, 5], [8, 9, 12], [15, 16], [1, 3]],
       options: options,
       keyword: '',
       popperProps: popperProps,

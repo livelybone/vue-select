@@ -6,19 +6,23 @@
  * */
 export default {
   beforeMount() {
-    this.init()
+    this.initTemp()
   },
   props: {
-    value: Array,
+    value: {
+      default() {
+        return []
+      },
+      type: Array,
+    },
     expandType: String,
-    changeOnSelect: Boolean,
   },
   computed: {
     _lineStyle() {
       return { height: `${this.optionsHeight}px` }
     },
     showOptions() {
-      return this.options.map(op => this.setSelect(op, this.tempVal, 0))
+      return this.options.map(op => this.setSelect(op, 0))
     },
     selectedOptions() {
       const selected = this.getSelected(this.showOptions)
@@ -65,6 +69,12 @@ export default {
         }
         return pre
       }, [item0]) : []
+    },
+    isSelected(op, val) {
+      return op.value === val
+    },
+    isEnd(op) {
+      return !(op.children instanceof Array && op.children.length > 0)
     },
   },
 }

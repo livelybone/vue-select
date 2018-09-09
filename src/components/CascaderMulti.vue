@@ -1,13 +1,13 @@
 <template v-if="valid">
   <div class="cascader-multi" @click.stop="" ref="wrap">
-    <div class="value values" @click.stop="optionsHidden=false;$refs.input.focus()">
+    <div class="value values" @click.stop="show()">
       <div v-for="(o, i) in showSelected" class="val" :key="i">
         <span class="v" v-html="o.name"></span>
-        <span class="icon-del" @click.stop="click(o)"></span>
+        <span class="icon-del" @click.stop="deal(o.value)"></span>
       </div>
       <input v-if="canSearch" v-model="inputVal" class="input val"
-             :placeholder="_searchPlaceholder" ref="input">
-      <span v-else-if="showSelected.length>0" class="val placeholder">{{_placeholder}}</span>
+             :placeholder="_searchPlaceholder" @click.stop="optionsHidden=false" ref="input">
+      <span v-else-if="showSelected.length<=0" class="val placeholder">{{_placeholder}}</span>
     </div>
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
     <popper v-if="!optionsHidden" class="options" ref="optionsEl"
@@ -38,12 +38,11 @@ import Mixin from '../common/Mixin'
 export default {
   mixins: [Mixin, CascaderMixin],
   computed: {
-    selected() {
-      return (this.value || []).map(value => this.getSelected(this.mergedOptions, value))
-    },
     showSelected() {
-      return this.selected
-        .map(selected => selected.reduce((pre, item) => {
+      const selected = (this.value || []).filter(v => v)
+        .map(value => this.getSelected(this.mergedOptions, value))
+      return selected
+        .map(s => s.reduce((pre, item) => {
           if (pre.name) pre.name += ` <span class="split">/</span> ${item.name}`
           else pre.name = item.name
           pre.value.push(item.value)
@@ -52,33 +51,46 @@ export default {
     },
   },
   methods: {
-    init() {
-      this.tempVal = [...this.value][0] || []
+    initTemp() {
+      this.tempVal = this.value && this.value[0] ? [...this.value[0]] : []
     },
-    html(o) {
-      return `${o.name}${this.isSelected(o.value) && [...o.children].length > 0 ? '<span class="icon-selected"></span>' : ''}`
+    html(o, selected, isEnd) {
+      return `${o.name}${selected && isEnd ? '<span class="icon-selected"></span>' : ''}`
     },
-    setSelect(op, valArr, index) {
+    setSelect(op, index) {
+      const isEnd = this.isEnd(op)
+      const selected = (this.value || [])
+        .filter(val => this.equal(this.tempVal.slice(0, index), val))
+        .some(val => this.isSelected(op, val[index]))
       return {
         ...op,
-        selected: this.isSelected(op, valArr[index]),
-        ...(op.children instanceof Array
+        selected,
+        ...(!isEnd
           ? {
-            children: op.children.map(child => this.setSelect(child, valArr, index + 1)),
+            children: op.children.map(child => this.setSelect(child, index + 1)),
             cName: `${op.name}<span class="icon-expand"></span>`,
-          } : {}),
+          } : { cName: this.html(op, selected, isEnd) }),
       }
     },
+    deal(valArr) {
+      const values = [...this.value]
+      const key = this.find(Object.keys(values), k => this.equal(values[k], valArr), '')
+      if (key) {
+        if (values[key].length === valArr.length) values.splice(key, 1)
+        else values.splice(key, 1, [...valArr])
+      } else values.push([...valArr])
+      this.$emit('input', values)
+    },
     click(option, i = 0, isHover = false) {
-      const { value, children } = option
+      const { value } = option
       if (this.tempVal[i] !== value) {
+        this.tempVal.length = i + 1
         if (i === 0) this.tempVal = [value]
         else this.$set(this.tempVal, i, value)
       }
-      const isEnd = !children
-      if ((this.changeOnSelect || isEnd) && !isHover) {
-        this.$emit('input', [...this.tempVal])
-        if (isEnd) this.optionsHidden = true
+      const isEnd = this.isEnd(option)
+      if (isEnd && !isHover) {
+        this.deal(this.tempVal)
       }
     },
     hover(option, i = 0) {
@@ -90,8 +102,8 @@ export default {
         }
       }
     },
-    isSelected(val) {
-      return this.value.some(v => v === val)
+    equal(tArr, arr) {
+      return tArr.every((v, i) => v === arr[i])
     },
   },
 }
