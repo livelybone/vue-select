@@ -3,6 +3,8 @@
 ![pkg.module](https://img.shields.io/badge/pkg.module-supported-blue.svg "pkg.module")
 ![mobile supported](https://img.shields.io/badge/mobile-supported-green.svg "mobile supported")
 
+> `pkg.module supported`, which means that you can apply tree-shaking in you project
+
 A vue select component, includes cascader
 
 ## repository
@@ -23,12 +25,6 @@ import {SelectBase, SelectMulti, Cascader, CascaderMulti} from '@livelybone/vue-
 // or
 import * as VueSelect from '@livelybone/vue-select';
 
-// import what you just need
-import SelectBase from '@livelybone/vue-select/lib/umd/SelectBase';
-import SelectMulti from '@livelybone/vue-select/lib/umd/SelectMulti';
-import Cascader from '@livelybone/vue-select/lib/umd/Cascader';
-import CascaderMulti from '@livelybone/vue-select/lib/umd/CascaderMulti';
-
 // Global register
 Vue.component('select-base', SelectBase);
 Vue.component('select-multi', SelectMulti);
@@ -39,6 +35,12 @@ Vue.component('cascader-multi', CascaderMulti);
 new Vue({
   components:{SelectBase, SelectMulti, Cascader, CascaderMulti}
 })
+```
+
+Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/@livelybone/vue-select/lib/umd/)
+```html
+<-- use what you want -->
+<script src="https://unpkg.com/@livelybone/vue-select/lib/umd/<--module-->.js"></script>
 ```
 
 ## Props
