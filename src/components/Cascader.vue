@@ -1,10 +1,10 @@
 <template v-if="valid">
   <div class="cascader" @click.stop="" ref="wrap">
-    <div v-if="!search||optionsHidden" class="value"
+    <div v-if="!canSearch||optionsHidden" class="value"
          :class="{'placeholder':showSelected.value.length<1}"
          :style="inputWrapStyle" v-html="showSelected.name||_placeholder"
          @click.stop="show()"></div>
-    <input v-if="search" v-show="!optionsHidden" class="input" v-model="inputVal"
+    <input v-if="canSearch" v-show="!optionsHidden" class="input" v-model="inputVal"
            :style="inputWrapStyle" :placeholder="_searchPlaceholder" ref="input">
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
     <popper v-if="!optionsHidden" class="options" ref="optionsEl"
@@ -35,7 +35,7 @@ import Mixin from '../common/Mixin'
 export default {
   mixins: [Mixin, CascaderMixin],
   props: {
-    changeOnSelect: Boolean,
+    inputWrapStyle: Object,
   },
   computed: {
     selected() {
@@ -51,6 +51,9 @@ export default {
     },
   },
   methods: {
+    init() {
+      this.tempVal = [...this.value]
+    },
     setSelect(op, valArr, index) {
       return {
         ...op,

@@ -1,10 +1,10 @@
 <template v-if="valid">
   <div class="select-base" @click.stop="" ref="wrap">
-    <div v-if="!search||optionsHidden" class="value"
+    <div v-if="!canSearch||optionsHidden" class="value"
          :class="{'placeholder':!selected.value&&selected.value!==0}"
          :style="inputWrapStyle" v-html="selected.name||_placeholder"
          @click.stop="show()"></div>
-    <input v-if="search" v-show="!optionsHidden" class="input" v-model="inputVal"
+    <input v-if="canSearch" v-show="!optionsHidden" class="input" v-model="inputVal"
            :style="inputWrapStyle" :placeholder="_searchPlaceholder" ref="input">
     <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
     <popper v-if="!optionsHidden" class="options" :referenceElm="$refs.wrap"
@@ -25,6 +25,7 @@ export default {
   mixins: [Mixin],
   props: {
     value: [String, Number],
+    inputWrapStyle: Object,
   },
   computed: {
     selected() {

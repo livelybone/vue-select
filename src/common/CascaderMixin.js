@@ -10,13 +10,8 @@ export default {
   },
   props: {
     value: Array,
-    options: {
-      default() {
-        return []
-      },
-      type: Array,
-    },
     expandType: String,
+    changeOnSelect: Boolean,
   },
   computed: {
     _lineStyle() {
@@ -45,16 +40,12 @@ export default {
       }
     },
     selectedOptions(val) {
-      console.log(val)
       if (val) {
         this.listenOptionsStyle()
       }
     },
   },
   methods: {
-    init() {
-      this.tempVal = [...this.value]
-    },
     listenOptionsStyle() {
       if (this.$refs.optionsEl) {
         const { clientHeight } = this.$refs.optionsEl.$el

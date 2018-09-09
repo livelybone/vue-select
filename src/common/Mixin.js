@@ -18,7 +18,6 @@ export default {
     this.bind(false)
   },
   props: {
-    isMobile: Boolean,
     id: String,
     options: {
       default() {
@@ -26,16 +25,15 @@ export default {
       },
       type: Array,
     },
-    maxHeight: String,
     canEdit: {
       default: true,
       type: Boolean,
     },
-    search: Boolean,
+    canSearch: Boolean,
     placeholder: String,
     searchPlaceholder: String,
-    inputWrapStyle: Object,
     popperProps: Object,
+    scrollbarProps: Object,
   },
   data() {
     return {
@@ -71,6 +69,14 @@ export default {
           positionFixed: !!this.positionFixed,
         },
       }
+    },
+    isMobile() {
+      const { isMobile } = this.scrollbarProps || {}
+      return isMobile
+    },
+    maxHeight() {
+      const { maxHeight } = this.scrollbarProps || {}
+      return maxHeight
     },
   },
   watch: {

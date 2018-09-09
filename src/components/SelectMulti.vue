@@ -5,7 +5,7 @@
         <span class="v" v-html="o.name"></span>
         <span class="icon-del" @click.stop="click(o)"></span>
       </div>
-      <input v-if="search" v-model="inputVal" class="input val"
+      <input v-if="canSearch" v-model="inputVal" class="input val"
              :placeholder="_searchPlaceholder" ref="input">
       <span v-else-if="selected.length>0" class="val placeholder">{{_placeholder}}</span>
     </div>
