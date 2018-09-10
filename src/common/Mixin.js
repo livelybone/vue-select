@@ -1,14 +1,7 @@
+import { objectDeepMerge } from '@livelybone/copy'
 import VuePopper from '@livelybone/vue-popper'
 import Options from '../common/Options.vue'
 import { find } from './find'
-
-const defaultPopperProps = {
-  arrowPosition: 'start',
-  arrowOffsetScaling: 1,
-  popperOptions: {
-    placement: 'bottom-start',
-  },
-}
 
 export default {
   beforeMount() {
@@ -41,6 +34,18 @@ export default {
       optionsHidden: true,
       shouldHide: true,
       inputVal: '',
+      defaultPopperProps: Object.freeze({
+        arrowPosition: 'start',
+        arrowOffsetScaling: 1,
+        popperOptions: {
+          placement: 'bottom-start',
+          modifiers: {
+            preventOverflow: {
+              boundariesElement: typeof document !== 'undefined' ? document.body : '',
+            },
+          },
+        },
+      }),
     }
   },
   computed: {
@@ -59,16 +64,7 @@ export default {
       return valid
     },
     _popperProps() {
-      const { popperOptions } = this.popperProps || {}
-      return {
-        ...defaultPopperProps,
-        ...this.popperProps,
-        popperOptions: {
-          ...defaultPopperProps.popperOptions,
-          ...popperOptions,
-          positionFixed: !!this.positionFixed,
-        },
-      }
+      return objectDeepMerge({}, this.defaultPopperProps, this.popperProps)
     },
     isMobile() {
       const { isMobile } = this.scrollbarProps || {}

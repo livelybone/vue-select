@@ -28,7 +28,7 @@ const conf = entry => Object.assign({}, baseConf, {
     format,
     name: entry.name === 'index' ? 'VueSelect' : entry.name,
   })),
-  external: entry.external ? ['vue-scrollbar-live', '@livelybone/vue-popper'] : [],
+  external: entry.external ? ['vue-scrollbar-live', '@livelybone/vue-popper', '@livelybone/copy'] : [],
   plugins: baseConf.plugins.concat([(entry.needUglify !== false && uglify())]),
 })
 
