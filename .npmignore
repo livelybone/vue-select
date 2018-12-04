@@ -24,3 +24,5 @@ coverage/
 /karma.conf.js
 /.eslintrc.js
 /.eslintignore
+
+/package-lock.json

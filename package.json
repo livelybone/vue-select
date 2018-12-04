@@ -1,6 +1,6 @@
 {
   "name": "@livelybone/vue-select",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A vue select component, includes cascader",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
@@ -69,6 +69,6 @@
   "dependencies": {
     "@livelybone/copy": "^2.2.0",
     "@livelybone/vue-popper": "^1.6.0",
-    "vue-scrollbar-live": "^4.4.0"
+    "vue-scrollbar-live": "^4.5.1"
   }
 }
