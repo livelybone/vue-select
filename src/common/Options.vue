@@ -5,7 +5,7 @@
          class="option"
          :class="{selected:o.selected}"
          :key="i"
-         v-html="o.cName||o.name"
+         :ref="'option-'+i"
          @mouseenter="$emit('hover', o)"
          @click.stop="$emit('select', o)"></div>
     <slot v-if="!options.length"/>
@@ -29,7 +29,29 @@ export default {
   data() {
     return { scrollTo: 0 }
   },
-  methods: {},
+  watch: {
+    options: {
+      handler() {
+        this.insertHtml()
+      },
+      immediate: true,
+    },
+  },
+  methods: {
+    /**
+     * Why not use v-html: the touch event seems to be prevented when use v-html
+     * However, this solution performs poorly, because it manipulates the DOM directly
+     * Waiting for another solution
+     * */
+    insertHtml() {
+      this.$nextTick(() => {
+        (this.options || []).forEach((o, i) => {
+          const ele = this.$refs[`option-${i}`][0] || this.$refs[`option-${i}`]
+          ele.innerHTML = o.cName || o.name
+        })
+      })
+    },
+  },
   components: { 'scrollbar': VueScrollbar },
 }
 </script>
