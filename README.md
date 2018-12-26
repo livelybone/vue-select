@@ -8,10 +8,10 @@
 A vue select component, includes cascader
 
 ## repository
-vue, select, cascader
+https://github.com/livelybone/vue-select
 
 ## Demo
-vue, select, cascader
+https://livelybone.github.io/vue/vue-select
 
 ## Installation
 ```bash
