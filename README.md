@@ -11,7 +11,7 @@ A vue select component, includes cascader
 https://github.com/livelybone/vue-select
 
 ## Demo
-https://livelybone.github.io/vue/vue-select
+https://livelybone.github.io/vue/vue-select/
 
 ## Installation
 ```bash
