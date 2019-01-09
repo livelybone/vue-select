@@ -66,7 +66,7 @@ export default {
     _popperProps() {
       return objectDeepMerge({}, this.defaultPopperProps, this.popperProps)
     },
-    isMobile() {
+    $_select_isMobile() {
       const { isMobile } = this.scrollbarProps || {}
       return isMobile
     },

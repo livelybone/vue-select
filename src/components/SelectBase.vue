@@ -1,17 +1,33 @@
 <template v-if="valid">
-  <div class="select-base" @click.stop="" ref="wrap">
-    <div v-if="!canSearch||optionsHidden" class="value"
+  <div class="select-base"
+       @click.stop=""
+       ref="wrap">
+    <div v-if="!canSearch||optionsHidden"
+         class="value"
          :class="{'placeholder':!selected.value&&selected.value!==0}"
-         :style="inputWrapStyle" v-html="selected.name||_placeholder"
+         :style="inputWrapStyle"
+         v-html="selected.name||_placeholder"
          @click.stop="show()"></div>
-    <input v-if="canSearch" v-show="!optionsHidden" class="input" v-model="inputVal"
-           :style="inputWrapStyle" :placeholder="_searchPlaceholder" ref="input">
-    <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
-    <popper v-if="!optionsHidden" class="options" :referenceElm="$refs.wrap"
-            :popperOptions="_popperProps.popperOptions" :arrowPosition="_popperProps.arrowPosition"
+    <input v-if="canSearch"
+           v-show="!optionsHidden"
+           class="input" v-model="inputVal"
+           :style="inputWrapStyle"
+           :placeholder="_searchPlaceholder"
+           ref="input">
+    <span class="icon-arrow"
+          :class="{'reverse': !optionsHidden}"></span>
+    <popper v-if="!optionsHidden"
+            class="options"
+            :referenceElm="$refs.wrap"
+            :popperOptions="_popperProps.popperOptions"
+            :arrowPosition="_popperProps.arrowPosition"
             :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
-      <options :isMobile="isMobile" :maxHeight="maxHeight||'50vh'" :options="showOptions"
-               @startDrag="shouldHide=false" @endDrag="endDrag" @select="click">
+      <options :$_select_isMobile="$_select_isMobile"
+               :maxHeight="maxHeight||'50vh'"
+               :options="showOptions"
+               @startDrag="shouldHide=false"
+               @endDrag="endDrag"
+               @select="click">
         <slot/>
       </options>
     </popper>

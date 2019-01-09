@@ -1,29 +1,56 @@
 <template v-if="valid">
-  <div class="cascader-multi" @click.stop="" ref="wrap">
-    <div class="value values" @click.stop="show()">
-      <div v-for="(o, i) in showSelected" class="val" :key="i">
-        <span class="v" v-html="o.name"></span>
-        <span class="icon-del" @click.stop="deal(o.value)"></span>
+  <div class="cascader-multi"
+       @click.stop=""
+       ref="wrap">
+    <div class="value values"
+         @click.stop="show()">
+      <div v-for="(o, i) in showSelected"
+           class="val"
+           :key="i">
+        <span class="v"
+              v-html="o.name"></span>
+        <span class="icon-del"
+              @click.stop="deal(o.value)"></span>
       </div>
-      <input v-if="canSearch" v-model="inputVal" class="input val"
-             :placeholder="_searchPlaceholder" @click.stop="optionsHidden=false" ref="input">
-      <span v-else-if="showSelected.length<=0" class="val placeholder">{{_placeholder}}</span>
+      <input v-if="canSearch"
+             v-model="inputVal"
+             class="input val"
+             :placeholder="_searchPlaceholder"
+             @click.stop="optionsHidden=false"
+             ref="input">
+      <span v-else-if="showSelected.length<=0"
+            class="val placeholder">{{_placeholder}}</span>
     </div>
-    <span class="icon-arrow" :class="{'reverse': !optionsHidden}"></span>
-    <popper v-if="!optionsHidden" class="options" ref="optionsEl"
-            :referenceElm="$refs.wrap" :popperOptions="_popperProps.popperOptions"
+    <span class="icon-arrow"
+          :class="{'reverse': !optionsHidden}"></span>
+    <popper v-if="!optionsHidden"
+            class="options"
+            ref="optionsEl"
+            :referenceElm="$refs.wrap"
+            :popperOptions="_popperProps.popperOptions"
             :arrowPosition="_popperProps.arrowPosition"
             :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
-      <options :isMobile="isMobile" :maxHeight="maxHeight||'50vh'" :options="showOptions"
-               @startDrag="shouldHide=false" @endDrag="endDrag"
-               @select="click($event, 0)" @hover="hover($event, 0)">
+      <options :$_select_isMobile="$_select_isMobile"
+               :maxHeight="maxHeight||'50vh'"
+               :options="showOptions"
+               @startDrag="shouldHide=false"
+               @endDrag="endDrag"
+               @select="click($event, 0)"
+               @hover="hover($event, 0)">
         <slot/>
       </options>
       <template v-for="(options, i) in selectedOptions">
-        <div class="line" :key="'line'+i" :style="_lineStyle"></div>
-        <options :key="i" :isMobile="isMobile"
-                 :maxHeight="maxHeight||'50vh'" :options="options" @startDrag="shouldHide=false"
-                 @endDrag="endDrag" @select="click($event, +i+1)" @hover="hover($event, +i+1)">
+        <div class="line"
+             :key="'line'+i"
+             :style="_lineStyle"></div>
+        <options :key="i"
+                 :$_select_isMobile="$_select_isMobile"
+                 :maxHeight="maxHeight||'50vh'"
+                 :options="options"
+                 @startDrag="shouldHide=false"
+                 @endDrag="endDrag"
+                 @select="click($event, +i+1)"
+                 @hover="hover($event, +i+1)">
           <slot :name="i"/>
         </options>
       </template>

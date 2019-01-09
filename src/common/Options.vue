@@ -22,7 +22,7 @@ export default {
     this.scrollTo = this.options.length === 1 ? 0 : index / (this.options.length - 1)
   },
   props: {
-    isMobile: Boolean,
+    $_select_isMobile: Boolean,
     maxHeight: [Number, String],
     options: Array,
   },
