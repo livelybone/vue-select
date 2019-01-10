@@ -1,6 +1,6 @@
 {
   "name": "@livelybone/vue-select",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A vue select component, includes cascader",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",

@@ -4,12 +4,7 @@ import Options from '../common/Options.vue'
 import { find } from './find'
 
 export default {
-  beforeMount() {
-    this.mergedOptions = [...this.options]
-  },
-  beforeDestroy() {
-    this.bind(false)
-  },
+  components: { Options, 'popper': VuePopper },
   props: {
     id: String,
     options: {
@@ -108,7 +103,9 @@ export default {
       }, 100)
     },
     bind(bool) {
-      window[`${bool ? 'add' : 'remove'}EventListener`]('click', this.hide)
+      if (typeof window !== 'undefined') {
+        window[`${bool ? 'add' : 'remove'}EventListener`]('click', this.hide)
+      }
     },
     find,
     mergeOptions(a1, a2) {
@@ -124,5 +121,10 @@ export default {
       return Object.keys(obj).map(k => obj[k])
     },
   },
-  components: { Options, 'popper': VuePopper },
+  beforeMount() {
+    this.mergedOptions = [...this.options]
+  },
+  beforeDestroy() {
+    this.bind(false)
+  },
 }
