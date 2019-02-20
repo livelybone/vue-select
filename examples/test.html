@@ -34,7 +34,7 @@ var popperProps = {
 
 new Vue({
   el: '#datetime-picker',
-  template: '<vue-select class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :canSearch="true" :popperProps="popperProps" @search="log">无结果</vue-select>',
+  template: '<vue-select class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :canEdit="true" :canSearch="true" :popperProps="popperProps" @search="log">无结果</vue-select>',
   data: function () {
     return {
       isMobile: isMobile,

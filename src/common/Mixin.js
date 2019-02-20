@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     show() {
-      if (this.optionsHidden) {
+      if (this.canEdit && this.optionsHidden) {
         this.optionsHidden = false
         if (this.canSearch) this.$nextTick(() => this.$refs.input.focus())
         if ('initTemp' in this) this.initTemp()

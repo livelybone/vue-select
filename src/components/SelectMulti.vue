@@ -1,5 +1,6 @@
 <template v-if="valid">
   <div class="select-multi"
+       :class="{disabled:!canEdit}"
        @click.stop=""
        ref="wrap">
     <div class="value values"
@@ -12,32 +13,36 @@
         <span class="icon-del"
               @click.stop="click(o)"></span>
       </div>
-      <input v-if="canSearch"
-             v-model="inputVal"
-             class="input val"
-             :placeholder="_searchPlaceholder"
-             @click.stop="optionsHidden=false"
-             ref="input">
-      <span v-else-if="selected.length<=0"
-            class="val placeholder">{{_placeholder}}</span>
+      <template v-if="canEdit">
+        <input v-if="canSearch"
+               v-model="inputVal"
+               class="input val"
+               :placeholder="_searchPlaceholder"
+               @click.stop="optionsHidden=false"
+               ref="input">
+        <span v-else-if="selected.length<=0"
+              class="val placeholder">{{_placeholder}}</span>
+      </template>
     </div>
-    <span class="icon-arrow"
-          :class="{'reverse': !optionsHidden}"></span>
-    <popper v-if="!optionsHidden"
-            class="options"
-            :referenceElm="$refs.wrap"
-            :popperOptions="_popperProps.popperOptions"
-            :arrowPosition="_popperProps.arrowPosition"
-            :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
-      <options :$_select_isMobile="$_select_isMobile"
-               :maxHeight="maxHeight||'50vh'"
-               :options="showOptions"
-               @startDrag="shouldHide=false"
-               @endDrag="endDrag"
-               @select="click">
-        <slot/>
-      </options>
-    </popper>
+    <template v-if="canEdit">
+      <span class="icon-arrow"
+            :class="{'reverse': !optionsHidden}"></span>
+      <popper v-if="!optionsHidden"
+              class="options"
+              :referenceElm="$refs.wrap"
+              :popperOptions="_popperProps.popperOptions"
+              :arrowPosition="_popperProps.arrowPosition"
+              :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
+        <options :$_select_isMobile="$_select_isMobile"
+                 :maxHeight="maxHeight||'50vh'"
+                 :options="showOptions"
+                 @startDrag="shouldHide=false"
+                 @endDrag="endDrag"
+                 @select="click">
+          <slot/>
+        </options>
+      </popper>
+    </template>
   </div>
 </template>
 

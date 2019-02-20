@@ -1,36 +1,40 @@
 <template v-if="valid">
   <div class="select-base"
+       :class="{disabled:!canEdit}"
        @click.stop=""
        ref="wrap">
-    <div v-if="!canSearch||optionsHidden"
+    <div v-if="!canEdit||!canSearch||optionsHidden"
          class="value"
          :class="{'placeholder':!selected.value&&selected.value!==0}"
          :style="inputWrapStyle"
          v-html="selected.name||_placeholder"
          @click.stop="show()"></div>
-    <input v-if="canSearch"
-           v-show="!optionsHidden"
-           class="input" v-model="inputVal"
-           :style="inputWrapStyle"
-           :placeholder="_searchPlaceholder"
-           ref="input">
-    <span class="icon-arrow"
-          :class="{'reverse': !optionsHidden}"></span>
-    <popper v-if="!optionsHidden"
-            class="options"
-            :referenceElm="$refs.wrap"
-            :popperOptions="_popperProps.popperOptions"
-            :arrowPosition="_popperProps.arrowPosition"
-            :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
-      <options :$_select_isMobile="$_select_isMobile"
-               :maxHeight="maxHeight||'50vh'"
-               :options="showOptions"
-               @startDrag="shouldHide=false"
-               @endDrag="endDrag"
-               @select="click">
-        <slot/>
-      </options>
-    </popper>
+    <template v-if="canEdit">
+      <input v-if="canSearch"
+             v-show="!optionsHidden"
+             class="input"
+             v-model="inputVal"
+             :style="inputWrapStyle"
+             :placeholder="_searchPlaceholder"
+             ref="input">
+      <span class="icon-arrow"
+            :class="{'reverse': !optionsHidden}"></span>
+      <popper v-if="!optionsHidden"
+              class="options"
+              :referenceElm="$refs.wrap"
+              :popperOptions="_popperProps.popperOptions"
+              :arrowPosition="_popperProps.arrowPosition"
+              :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
+        <options :$_select_isMobile="$_select_isMobile"
+                 :maxHeight="maxHeight||'50vh'"
+                 :options="showOptions"
+                 @startDrag="shouldHide=false"
+                 @endDrag="endDrag"
+                 @select="click">
+          <slot/>
+        </options>
+      </popper>
+    </template>
   </div>
 </template>
 

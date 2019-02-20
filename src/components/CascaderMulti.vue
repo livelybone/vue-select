@@ -1,5 +1,6 @@
 <template v-if="valid">
   <div class="cascader-multi"
+       :class="{disabled:!canEdit}"
        @click.stop=""
        ref="wrap">
     <div class="value values"
@@ -12,49 +13,53 @@
         <span class="icon-del"
               @click.stop="deal(o.value)"></span>
       </div>
-      <input v-if="canSearch"
-             v-model="inputVal"
-             class="input val"
-             :placeholder="_searchPlaceholder"
-             @click.stop="optionsHidden=false"
-             ref="input">
-      <span v-else-if="showSelected.length<=0"
-            class="val placeholder">{{_placeholder}}</span>
+      <template v-if="canEdit">
+        <input v-if="canSearch"
+               v-model="inputVal"
+               class="input val"
+               :placeholder="_searchPlaceholder"
+               @click.stop="optionsHidden=false"
+               ref="input">
+        <span v-else-if="showSelected.length<=0"
+              class="val placeholder">{{_placeholder}}</span>
+      </template>
     </div>
-    <span class="icon-arrow"
-          :class="{'reverse': !optionsHidden}"></span>
-    <popper v-if="!optionsHidden"
-            class="options"
-            ref="optionsEl"
-            :referenceElm="$refs.wrap"
-            :popperOptions="_popperProps.popperOptions"
-            :arrowPosition="_popperProps.arrowPosition"
-            :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
-      <options :$_select_isMobile="$_select_isMobile"
-               :maxHeight="maxHeight||'50vh'"
-               :options="showOptions"
-               @startDrag="shouldHide=false"
-               @endDrag="endDrag"
-               @select="click($event, 0)"
-               @hover="hover($event, 0)">
-        <slot/>
-      </options>
-      <template v-for="(options, i) in selectedOptions">
-        <div class="line"
-             :key="'line'+i"
-             :style="_lineStyle"></div>
-        <options :key="i"
-                 :$_select_isMobile="$_select_isMobile"
+    <template v-if="canEdit">
+      <span class="icon-arrow"
+            :class="{'reverse': !optionsHidden}"></span>
+      <popper v-if="!optionsHidden"
+              class="options"
+              ref="optionsEl"
+              :referenceElm="$refs.wrap"
+              :popperOptions="_popperProps.popperOptions"
+              :arrowPosition="_popperProps.arrowPosition"
+              :arrowOffsetScaling="_popperProps.arrowOffsetScaling">
+        <options :$_select_isMobile="$_select_isMobile"
                  :maxHeight="maxHeight||'50vh'"
-                 :options="options"
+                 :options="showOptions"
                  @startDrag="shouldHide=false"
                  @endDrag="endDrag"
-                 @select="click($event, +i+1)"
-                 @hover="hover($event, +i+1)">
-          <slot :name="i"/>
+                 @select="click($event, 0)"
+                 @hover="hover($event, 0)">
+          <slot/>
         </options>
-      </template>
-    </popper>
+        <template v-for="(options, i) in selectedOptions">
+          <div class="line"
+               :key="'line'+i"
+               :style="_lineStyle"></div>
+          <options :key="i"
+                   :$_select_isMobile="$_select_isMobile"
+                   :maxHeight="maxHeight||'50vh'"
+                   :options="options"
+                   @startDrag="shouldHide=false"
+                   @endDrag="endDrag"
+                   @select="click($event, +i+1)"
+                   @hover="hover($event, +i+1)">
+            <slot :name="i"/>
+          </options>
+        </template>
+      </popper>
+    </template>
   </div>
 </template>
 

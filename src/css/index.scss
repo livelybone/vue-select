@@ -4,6 +4,7 @@ $font: #666;
 $placeholder: #aaa;
 $select: #fff;
 $input-bg: #fff;
+$input-bg-disabled: #f9f9f9;
 $base-size: 10px;
 $option-hover-bg: lighten($main, 50%);
 $shadow: rgba(0, 0, 0, .1);
@@ -148,6 +149,11 @@ $pseudoSize: size(.6);
   background: transparent;
   cursor: pointer;
 
+  &.disabled {
+    background: $input-bg-disabled;
+    cursor: default;
+  }
+
   &.select-multi, &.cascader, &.cascader-multi {
 
     .options .option {
@@ -249,7 +255,6 @@ $pseudoSize: size(.6);
     margin: 0;
     padding: 0;
     border: none;
-    cursor: pointer;
   }
 
   .placeholder {
