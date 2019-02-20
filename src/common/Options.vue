@@ -1,5 +1,5 @@
 <template>
-  <scrollbar :isMobile="isMobile" :maxHeight="maxHeight||'50vh'" :scrollTo="scrollTo"
+  <scrollbar :isMobile="$_select_isMobile" :maxHeight="maxHeight||'50vh'" :scrollTo="scrollTo"
              v-on="$listeners">
     <div v-for="(o,i) in options"
          class="option"

@@ -1,6 +1,6 @@
 {
   "name": "@livelybone/vue-select",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "A vue select component, includes cascader",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
@@ -12,7 +12,8 @@
     "build:css": "node-sass ./src/css/index.scss ./lib/css/index.css --output-style compressed",
     "build": "rimraf ./lib && npm run build:css && rollup -c",
     "eslint": "eslint ./src/index.vue",
-    "test": "cross-env BABEL_ENV=test karma start --single-run"
+    "test": "cross-env BABEL_ENV=test karma start --single-run",
+    "commit": "npx git-cz"
   },
   "repository": {
     "type": "git",
@@ -39,8 +40,10 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-2": "^6.24.1",
     "chai": "^4.1.2",
+    "commitizen": "^3.0.5",
     "copy-webpack-plugin": "^4.5.2",
     "cross-env": "^5.2.0",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.12.0",
@@ -71,5 +74,10 @@
     "@livelybone/copy": "^2.2.0",
     "@livelybone/vue-popper": "^2.1.0",
     "vue-scrollbar-live": "^4.5.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
