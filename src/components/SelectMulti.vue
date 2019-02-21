@@ -10,7 +10,8 @@
            :key="i">
         <span class="v"
               v-html="o.name"></span>
-        <span class="icon-del"
+        <span v-if="canEdit"
+              class="icon-del"
               @click.stop="click(o)"></span>
       </div>
       <template v-if="canEdit">
@@ -76,11 +77,13 @@ export default {
       return `${o.name}${this.isSelected(o.value) ? '<span class="icon-selected"></span>' : ''}`
     },
     click({ value }) {
-      const index = this.find(Object.keys(this.value), k => this.value[k] === value, -1)
-      if (index > -1) {
-        this.$emit('input', this.value.slice(0, index).concat(this.value.slice(+index + 1)))
-      } else {
-        this.$emit('input', this.value.concat([value]))
+      if (this.canEdit) {
+        const index = this.find(Object.keys(this.value), k => this.value[k] === value, -1)
+        if (index > -1) {
+          this.$emit('input', this.value.slice(0, index).concat(this.value.slice(+index + 1)))
+        } else {
+          this.$emit('input', this.value.concat([value]))
+        }
       }
     },
     isSelected(val) {

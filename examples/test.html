@@ -80,7 +80,7 @@ new Vue({
 })
 new Vue({
   el: '#multi',
-  template: '<vue-select-multi class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :popperProps="popperProps" :canSearch="false" @search="log">无结果</vue-select-multi>',
+  template: '<vue-select-multi class="select" :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}" v-model="value" :options="showOptions" :popperProps="popperProps" :canEdit="false" :canSearch="false" @search="log">无结果</vue-select-multi>',
   data: function () {
     var options = [
       { name: 'place 1', value: 1 },

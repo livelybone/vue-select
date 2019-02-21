@@ -10,7 +10,8 @@
            :key="i">
         <span class="v"
               v-html="o.name"></span>
-        <span class="icon-del"
+        <span v-if="canEdit"
+              class="icon-del"
               @click.stop="deal(o.value)"></span>
       </div>
       <template v-if="canEdit">
@@ -105,24 +106,28 @@ export default {
       }
     },
     deal(valArr) {
-      const values = [...this.value]
-      const key = this.find(Object.keys(values), k => this.equal(values[k], valArr), '')
-      if (key) {
-        if (values[key].length === valArr.length) values.splice(key, 1)
-        else values.splice(key, 1, [...valArr])
-      } else values.push([...valArr])
-      this.$emit('input', values)
+      if (this.canEdit) {
+        const values = [...this.value]
+        const key = this.find(Object.keys(values), k => this.equal(values[k], valArr), '')
+        if (key) {
+          if (values[key].length === valArr.length) values.splice(key, 1)
+          else values.splice(key, 1, [...valArr])
+        } else values.push([...valArr])
+        this.$emit('input', values)
+      }
     },
     click(option, i = 0, isHover = false) {
-      const { value } = option
-      if (this.tempVal[i] !== value) {
-        this.tempVal.length = i + 1
-        if (i === 0) this.tempVal = [value]
-        else this.$set(this.tempVal, i, value)
-      }
-      const isEnd = this.isEnd(option)
-      if (isEnd && !isHover) {
-        this.deal(this.tempVal)
+      if (this.canEdit) {
+        const { value } = option
+        if (this.tempVal[i] !== value) {
+          this.tempVal.length = i + 1
+          if (i === 0) this.tempVal = [value]
+          else this.$set(this.tempVal, i, value)
+        }
+        const isEnd = this.isEnd(option)
+        if (isEnd && !isHover) {
+          this.deal(this.tempVal)
+        }
       }
     },
     hover(option, i = 0) {
