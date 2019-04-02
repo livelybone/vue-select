@@ -1,10 +1,8 @@
 <template v-if="valid">
   <div class="cascader-multi"
        :class="{disabled:!canEdit}"
-       @click.stop=""
        ref="wrap">
-    <div class="value values"
-         @click.stop="show()">
+    <div class="value values">
       <div v-for="(o, i) in showSelected"
            class="val"
            :key="i">
@@ -19,7 +17,6 @@
                v-model="inputVal"
                class="input val"
                :placeholder="_searchPlaceholder"
-               @click.stop="optionsHidden=false"
                ref="input">
         <span v-else-if="showSelected.length<=0"
               class="val placeholder">{{_placeholder}}</span>
@@ -28,7 +25,7 @@
     <template v-if="canEdit">
       <span class="icon-arrow"
             :class="{'reverse': !optionsHidden}"></span>
-      <popper v-if="!optionsHidden"
+      <popper v-show="!optionsHidden"
               class="options"
               ref="optionsEl"
               :referenceElm="$refs.wrap"

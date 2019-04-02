@@ -144,10 +144,21 @@ $pseudoSize: size(.6);
 .select-base, .select-multi, .cascader, .cascader-multi {
   position: relative;
   padding: 0 size(1);
+  font-size: size(1.4);
+  color: $font;
   border: 1px solid $border;
   border-radius: size(.3);
   background: transparent;
   cursor: pointer;
+
+  * {
+    box-sizing: border-box;
+    outline: none !important;
+  }
+
+  .input {
+    cursor: pointer;
+  }
 
   &.disabled {
     background: $input-bg-disabled;
@@ -239,13 +250,6 @@ $pseudoSize: size(.6);
         background: rgba($border, .5);
       }
     }
-  }
-
-  * {
-    box-sizing: border-box;
-    font-size: size(1.4);
-    color: $font;
-    outline: none !important;
   }
 
   .value, .input {

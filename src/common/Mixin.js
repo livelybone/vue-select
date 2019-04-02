@@ -71,9 +71,6 @@ export default {
     },
   },
   watch: {
-    optionsHidden(val) {
-      this.bind(!val)
-    },
     inputVal(val) {
       this.$emit('search', val)
     },
@@ -82,20 +79,20 @@ export default {
     },
   },
   methods: {
-    show() {
-      if (this.canEdit && this.optionsHidden) {
-        this.optionsHidden = false
-        if (this.canSearch) this.$nextTick(() => this.$refs.input.focus())
-        if ('initTemp' in this) this.initTemp()
-      } else {
-        this.hide()
+    toggle(ev) {
+      if (this.canEdit) {
+        const isContains = ev && this.$refs.wrap.contains(ev.target)
+        if (this.optionsHidden && isContains) {
+          this.optionsHidden = false
+          if (this.canSearch) this.$nextTick(() => this.$refs.input.focus())
+          if ('initTemp' in this) this.initTemp()
+        } else {
+          if (this.shouldHide) {
+            this.optionsHidden = true
+          }
+          this.shouldHide = true
+        }
       }
-    },
-    hide() {
-      if (this.shouldHide) {
-        this.optionsHidden = true
-      }
-      this.shouldHide = true
     },
     endDrag() {
       setTimeout(() => {
@@ -104,7 +101,7 @@ export default {
     },
     bind(bool) {
       if (typeof window !== 'undefined') {
-        window[`${bool ? 'add' : 'remove'}EventListener`]('click', this.hide)
+        window[`${bool ? 'add' : 'remove'}EventListener`]('click', this.toggle)
       }
     },
     find,
@@ -123,6 +120,7 @@ export default {
   },
   beforeMount() {
     this.mergedOptions = [...this.options]
+    this.bind(true)
   },
   beforeDestroy() {
     this.bind(false)

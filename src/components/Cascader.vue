@@ -1,14 +1,12 @@
 <template v-if="valid">
   <div class="cascader"
        :class="{disabled:!canEdit}"
-       @click.stop=""
        ref="wrap">
-    <div v-if="!canEdit||!canSearch||optionsHidden"
+    <div v-show="!canEdit||!canSearch||optionsHidden"
          class="value"
          :class="{'placeholder':showSelected.value.length<1}"
          :style="inputWrapStyle"
-         v-html="showSelected.name||_placeholder"
-         @click.stop="show()"></div>
+         v-html="showSelected.name||_placeholder"></div>
     <template v-if="canEdit">
       <input v-if="canSearch"
              v-show="!optionsHidden"
@@ -19,7 +17,7 @@
              ref="input">
       <span class="icon-arrow"
             :class="{'reverse': !optionsHidden}"></span>
-      <popper v-if="!optionsHidden"
+      <popper v-show="!optionsHidden"
               class="options"
               ref="optionsEl"
               :referenceElm="$refs.wrap"

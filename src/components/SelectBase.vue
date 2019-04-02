@@ -1,14 +1,12 @@
 <template v-if="valid">
   <div class="select-base"
        :class="{disabled:!canEdit}"
-       @click.stop=""
        ref="wrap">
-    <div v-if="!canEdit||!canSearch||optionsHidden"
+    <div v-show="!canEdit||!canSearch||optionsHidden"
          class="value"
          :class="{'placeholder':!selected.value&&selected.value!==0}"
          :style="inputWrapStyle"
-         v-html="selected.name||_placeholder"
-         @click.stop="show()"></div>
+         v-html="selected.name||_placeholder"></div>
     <template v-if="canEdit">
       <input v-if="canSearch"
              v-show="!optionsHidden"
@@ -19,7 +17,7 @@
              ref="input">
       <span class="icon-arrow"
             :class="{'reverse': !optionsHidden}"></span>
-      <popper v-if="!optionsHidden"
+      <popper v-show="!optionsHidden"
               class="options"
               :referenceElm="$refs.wrap"
               :popperOptions="_popperProps.popperOptions"
@@ -58,7 +56,7 @@ export default {
   methods: {
     click({ value }) {
       this.$emit('input', value)
-      this.optionsHidden = true
+      this.toggle()
     },
   },
 }
