@@ -101,7 +101,7 @@ export default {
     },
     bind(bool) {
       if (typeof window !== 'undefined') {
-        window[`${bool ? 'add' : 'remove'}EventListener`]('click', this.toggle)
+        window[`${bool ? 'add' : 'remove'}EventListener`]('click', this.toggle, true)
       }
     },
     find,

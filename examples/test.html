@@ -14,8 +14,15 @@
     vertical-align: top;
   }
   </style>
+  <script>
+  function a(){
+    var ev = window.event
+    ev.stopPropagation()
+    ev.preventDefault()
+  }
+  </script>
 </head>
-<body style="padding:100vh 20px; margin:0">
+<body style="padding:100vh 20px; margin:0" onclick="a()">
 <div id="select"></div>
 <div id="multi"></div>
 <div id="cascader"></div>
