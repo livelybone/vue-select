@@ -12,6 +12,8 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   'rules': {
+    'import/prefer-default-export': 'off',
+    'no-param-reassign': 'off',
     'prettier/prettier': 'error',
   },
   'settings': {

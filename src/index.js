@@ -1,3 +1,6 @@
-import VueSelect from './components/Index.vue'
+import Cascader from './components/Cascader.vue'
+import CascaderMulti from './components/CascaderMulti.vue'
+import SelectBase from './components/SelectBase.vue'
+import SelectMulti from './components/SelectMulti.vue'
 
-export default VueSelect
+export { SelectBase, SelectMulti, Cascader, CascaderMulti }

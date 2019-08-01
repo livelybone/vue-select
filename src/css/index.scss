@@ -1,0 +1,351 @@
+$main: #30b386;
+$border: #c2ccdc;
+$font: #666;
+$placeholder: #aaa;
+$select: #fff;
+$input-bg: #fff;
+$input-bg-disabled: #f9f9f9;
+$base-size: 10px;
+$option-hover-bg: lighten($main, 50%);
+$shadow: rgba(0, 0, 0, 0.1);
+$multi-value-color: #eee;
+
+@function size($factor) {
+  @return $factor * $base-size;
+}
+
+$option-height: size(3);
+$multi-value-height: size(2.4);
+$scrollbar-wrap-min-width: size(16);
+$option-padding: size(0.4);
+
+@mixin placeholder($color: $placeholder) {
+  &::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: $color;
+  }
+
+  &:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: $color;
+  }
+
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: $color;
+  }
+
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: $color;
+  }
+}
+
+@mixin middleLine($color) {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: $color;
+}
+
+@mixin dot($color) {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: size(0.6);
+  height: size(0.6);
+  margin: size(-0.3) 0 0 size(-0.3);
+  border-radius: size(0.3);
+  background: $color;
+}
+
+/* scrollbar css */
+.scrollbar-wrap .scrollbar {
+  width: size(0.4);
+  border-radius: size(0.6);
+  background: #eee;
+}
+
+/* popper css */
+$bg: $input-bg;
+$pseudoSize: size(0.6);
+
+@mixin pseudo($bg: $border, $direction: top, $borderWidth: $pseudoSize) {
+  position: absolute;
+  #{$direction}: -$pseudoSize;
+  width: 0;
+  height: 0;
+  border: $borderWidth solid transparent;
+
+  @if ($direction==top) {
+    border-top: 0;
+    border-bottom-color: $bg;
+  } @else if ($direction==bottom) {
+    border-bottom: 0;
+    border-top-color: $bg;
+  } @else if ($direction==left) {
+    border-left: 0;
+    border-right-color: $bg;
+  } @else if ($direction==right) {
+    border-right: 0;
+    border-left-color: $bg;
+  }
+}
+
+.vue-popper {
+  border-color: rgba($border, 0.5) !important;
+
+  &[x-placement^='bottom'] .arrow {
+    border-bottom-color: rgba($border, 0.5) !important;
+  }
+  &[x-placement^='top'] .arrow {
+    border-top-color: rgba($border, 0.5) !important;
+  }
+}
+
+.split {
+  color: $placeholder !important;
+}
+
+.select-base,
+.select-multi,
+.cascader,
+.cascader-multi {
+  position: relative;
+  padding: 0 size(1);
+  font-size: size(1.4);
+  color: $font;
+  border: 1px solid $border;
+  border-radius: size(0.3);
+  background: transparent;
+  cursor: pointer;
+
+  * {
+    box-sizing: border-box;
+    outline: none !important;
+  }
+
+  .input {
+    cursor: pointer;
+  }
+
+  &.disabled {
+    background: $input-bg-disabled;
+    cursor: default;
+  }
+
+  &.select-multi,
+  &.cascader,
+  &.cascader-multi {
+    .options .option {
+      &.selected {
+        color: $main !important;
+        background: transparent !important;
+        font-weight: 600;
+
+        .icon-selected {
+          float: right;
+          position: relative;
+          width: $option-height/2;
+          height: 100%;
+
+          &:before {
+            @include dot($main);
+          }
+        }
+
+        .icon-expand:before {
+          border-left-color: $main;
+        }
+      }
+
+      &:hover {
+        background: $option-hover-bg !important;
+
+        .icon-expand:after {
+          border-left-color: $option-hover-bg;
+        }
+      }
+
+      .icon-expand {
+        display: block;
+        float: right;
+        position: relative;
+        top: calc((#{$option-height} - #{size(1)}) / 2);
+        width: size(1);
+        height: size(1);
+
+        &:before {
+          content: '';
+          @include pseudo($font, right, size(0.5));
+          right: 0;
+        }
+
+        &:after {
+          content: '';
+          @include pseudo($input-bg, right, size(0.5));
+          right: 1px;
+        }
+      }
+    }
+  }
+
+  &.cascader,
+  &.cascader-multi {
+    .options {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      right: auto;
+      width: auto;
+
+      .scrollbar-wrap {
+        width: auto;
+        min-width: $scrollbar-wrap-min-width;
+      }
+
+      .option {
+        &.selected {
+          font-weight: 500;
+        }
+      }
+
+      .line {
+        float: left;
+        width: 1px;
+        margin: -$option-padding 0;
+        background: rgba($border, 0.5);
+      }
+    }
+  }
+
+  .value,
+  .input {
+    width: 100%;
+    height: $option-height;
+    line-height: $option-height;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .placeholder {
+    color: $placeholder;
+  }
+
+  .input {
+    display: block;
+    outline: none !important;
+
+    @include placeholder($placeholder);
+  }
+
+  .values {
+    min-height: $option-height;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .val {
+    display: inline-block;
+    width: auto;
+    height: $multi-value-height;
+    line-height: $multi-value-height;
+    padding: 0 size(0.6);
+    margin: ($option-height - $multi-value-height)/2;
+    margin-left: 0;
+    border-radius: size(0.2);
+    background: $multi-value-color;
+    white-space: nowrap;
+    vertical-align: top;
+
+    &.input,
+    &.placeholder {
+      background: transparent;
+    }
+
+    .v {
+      float: left;
+      font-size: size(1.2);
+    }
+
+    .icon-del {
+      float: right;
+      margin: 0 0 0 size(1);
+      position: relative;
+      width: $multi-value-height / 2;
+      height: 100%;
+
+      &:hover {
+        &:before,
+        &:after {
+          background: darken($font, 20%);
+        }
+      }
+
+      &:before,
+      &:after {
+        @include middleLine($font);
+        transform: rotate(45deg);
+      }
+
+      &:after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  .icon-arrow {
+    display: block;
+    position: absolute;
+    right: size(0.4);
+    top: 50%;
+    width: size(1);
+    height: size(0.5);
+    margin: size(-0.25) 0 0;
+    transition: transform 0.3s ease;
+
+    &:before {
+      content: '';
+      @include pseudo($font, bottom, size(0.5));
+      bottom: 0;
+    }
+
+    &:after {
+      content: '';
+      @include pseudo($input-bg, bottom, size(0.5));
+      bottom: 1px;
+    }
+
+    &.reverse {
+      transform: rotate(180deg);
+    }
+  }
+
+  .options {
+    width: 100%;
+    padding: $option-padding 0;
+    z-index: 9999;
+    box-shadow: 0 1px size(1) $shadow;
+
+    .option {
+      height: $option-height;
+      line-height: $option-height;
+      padding: 0 size(1);
+
+      &:hover {
+        background: $option-hover-bg !important;
+      }
+
+      &.selected {
+        color: $select !important;
+        background: $main !important;
+      }
+    }
+  }
+}

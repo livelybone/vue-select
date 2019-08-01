@@ -3,24 +3,307 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VueSelect</title>
+  <title>vue-select</title>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="../lib/umd/index.js"></script>
   <link rel="stylesheet" href="../lib/css/index.css">
+  <style>
+    .select {
+      display: inline-block;
+      width: 200px;
+      vertical-align: top;
+    }
+  </style>
+  <script>
+  function a(){
+    var ev = window.event
+    ev.stopPropagation()
+    ev.preventDefault()
+  }
+  </script>
 </head>
-<body>
-<div id="module"></div>
-
-<script>
-new Vue({
-  el: '#module',
-  template: '',
-  data: function () {
-    return {}
+<body style="padding:100vh 20px; margin:0" onclick="a()">
+<div id="select"></div>
+<div id="multi"></div>
+<div id="cascader"></div>
+<div id="cascader-multi"></div>
+<!--<button onclick="console.log('button',1)">点击</button>-->
+<script type="text/javascript">
+console.log(VueSelect)
+var isMobile = /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent)
+var popperProps = {
+  popperOptions: {
+    modifiers: {
+      preventOverflow: { padding: 20 },
+    },
   },
-  methods: {},
-  components: {}
+}
+
+new Vue({
+  el: '#select',
+  template: '<vue-select class="select"' +
+    ' :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}"' +
+    ' v-model="value"' +
+    ' :options="showOptions"' +
+    ' :canEdit="true"' +
+    ' :canSearch="true"' +
+    ' :popperProps="popperProps"' +
+    ' @search="log">无结果</vue-select>',
+  data: function () {
+    return {
+      isMobile: isMobile,
+      value: 1,
+      options: [
+        { name: 'place 1', value: 1 },
+        { name: 'place 2', value: 2 },
+        { name: 'place 3', value: 3 },
+        { name: 'place 4', value: 4 },
+        { name: 'place 5', value: 5 },
+        { name: 'place 6', value: 6 },
+        { name: 'place 7', value: 7 },
+        { name: 'place 8', value: 8 },
+        { name: 'place 9', value: 9 },
+        { name: 'place 10', value: 10 },
+        { name: 'place 11', value: 11 },
+        { name: 'place 12', value: 12 },
+        { name: 'place 13', value: 13 },
+        { name: 'place 14', value: 14 },
+        { name: 'place 15', value: 15 },
+        { name: 'place 16', value: 16 },
+        { name: 'place 17', value: 17 },
+      ],
+      keyword: '',
+      popperProps: popperProps,
+    }
+  },
+  computed: {
+    showOptions: function () {
+      return this.keyword ? this.options.filter(this.filter) : this.options
+    },
+  },
+  methods: {
+    log: function (val) {
+      console.log(val)
+      this.keyword = val
+    },
+    filter: function (op) {
+      return op.name.toString().indexOf(this.keyword) > -1
+    },
+  },
+  components: { 'vue-select': VueSelect.SelectBase },
 })
+new Vue({
+  el: '#multi',
+  template: '<vue-select-multi class="select"' +
+    ' :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}"' +
+    ' v-model="value"' +
+    ' :options="showOptions"' +
+    ' :popperProps="popperProps"' +
+    ' :canEdit="true"' +
+    ' :canSearch="false"' +
+    ' @search="log">无结果</vue-select-multi>',
+  data: function () {
+    var options = [
+      { name: 'place 1', value: 1 },
+      { name: 'place 2', value: 2 },
+      { name: 'place 3', value: 3 },
+      { name: 'place 4', value: 4 },
+      { name: 'place 5', value: 5 },
+      { name: 'place 6', value: 6 },
+      { name: 'place 7', value: 7 },
+      { name: 'place 8', value: 8 },
+      { name: 'place 9', value: 9 },
+      { name: 'place 10', value: 10 },
+      { name: 'place 11', value: 11 },
+      { name: 'place 12', value: 12 },
+      { name: 'place 13', value: 13 },
+      { name: 'place 14', value: 14 },
+      { name: 'place 15', value: 15 },
+      { name: 'place 16', value: 16 },
+      { name: 'place 17', value: 17 },
+    ]
+    return {
+      isMobile: isMobile,
+      value: options.map(function (o) {
+        return o.value
+      }),
+      options: options,
+      keyword: '',
+      popperProps: popperProps,
+    }
+  },
+  computed: {
+    showOptions: function () {
+      return this.keyword ? this.options.filter(this.filter) : this.options
+    },
+  },
+  methods: {
+    log: function (val) {
+      console.log(val)
+      this.keyword = val
+    },
+    filter: function (op) {
+      return op.name.toString().indexOf(this.keyword) > -1
+    },
+  },
+  components: { 'vue-select-multi': VueSelect.SelectMulti },
+})
+new Vue({
+  el: '#cascader',
+  template: '<cascader class="select"' +
+    ' :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}"' +
+    ' v-model="value"' +
+    ' :options="showOptions"' +
+    ' :popperProps="popperProps"' +
+    ' expandType="hover"' +
+    ' changeOnSelect' +
+    ' :canSearch="true"' +
+    ' @search="log">无结果</cascader>',
+  data: function () {
+    var options = [
+      {
+        name: 'place 1', value: 1, children: [
+          {
+            name: 'place 2', value: 2, children: [
+              { name: 'place 5', value: 5 },
+              { name: 'place 6', value: 6 },
+              { name: 'place 7', value: 7 },
+            ],
+          },
+          { name: 'place 3', value: 3 },
+          { name: 'place 4', value: 4 },
+        ],
+      },
+      {
+        name: 'place 8', value: 8, children: [
+          {
+            name: 'place 9', value: 9, children: [
+              { name: 'place 12', value: 12 },
+              { name: 'place 13', value: 13 },
+              { name: 'place 14', value: 14 },
+            ],
+          },
+          { name: 'place 10', value: 10 },
+          { name: 'place 11', value: 11 },
+        ],
+      },
+      {
+        name: 'place 15', value: 15, children: [
+          { name: 'place 16', value: 16 },
+        ],
+      },
+      { name: 'place 17', value: 17 },
+    ]
+    return {
+      isMobile: isMobile,
+      value: [1, 2],
+      options: options,
+      keyword: '',
+      popperProps: popperProps,
+    }
+  },
+  computed: {
+    showOptions: function () {
+      return this.keyword ? this.options.filter(this.filter) : this.options
+    },
+  },
+  watch: {
+    value: function (val) {
+      console.log(val)
+    },
+    options: function (val) {
+      console.log(val)
+    },
+  },
+  methods: {
+    log: function (val) {
+      console.log(val)
+      this.keyword = val
+    },
+    filter: function (op) {
+      return op.name.toString().indexOf(this.keyword) > -1
+    },
+  },
+  components: { 'cascader': VueSelect.Cascader },
+})
+new Vue({
+  el: '#cascader-multi',
+  template: '<cascader-multi class="select"' +
+    ' :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}"' +
+    ' v-model="value"' +
+    ' :options="showOptions"' +
+    ' :popperProps="popperProps"' +
+    ' expandType="click"' +
+    ' :canSearch="true"' +
+    ' @search="log">无结果</cascader-multi>',
+  data: function () {
+    var options = [
+      {
+        name: 'place 1', value: 1, children: [
+          {
+            name: 'place 2', value: 2, children: [
+              { name: 'place 5', value: 5 },
+              { name: 'place 6', value: 6 },
+              { name: 'place 7', value: 7 },
+            ],
+          },
+          { name: 'place 3', value: 3 },
+          { name: 'place 4', value: 4 },
+        ],
+      },
+      {
+        name: 'place 8', value: 8, children: [
+          {
+            name: 'place 9', value: 9, children: [
+              { name: 'place 12', value: 12 },
+              { name: 'place 13', value: 13 },
+              { name: 'place 14', value: 14 },
+            ],
+          },
+          { name: 'place 10', value: 10 },
+          { name: 'place 11', value: 11 },
+        ],
+      },
+      {
+        name: 'place 15', value: 15, children: [
+          { name: 'place 16', value: 16 },
+        ],
+      },
+      { name: 'place 17', value: 17 },
+    ]
+    return {
+      isMobile: isMobile,
+      value: [[1, 2, 5], [8, 9, 12], [15, 16], [1, 3]],
+      options: options,
+      keyword: '',
+      popperProps: popperProps,
+    }
+  },
+  computed: {
+    showOptions: function () {
+      return this.keyword ? this.options.filter(this.filter) : this.options
+    },
+  },
+  watch: {
+    value: function (val) {
+      console.log(val)
+    },
+    options: function (val) {
+      console.log(val)
+    },
+  },
+  methods: {
+    log: function (val) {
+      console.log(val)
+      this.keyword = val
+    },
+    filter: function (op) {
+      return op.name.toString().indexOf(this.keyword) > -1
+    },
+  },
+  components: { 'cascader-multi': VueSelect.CascaderMulti },
+})
+
 </script>
 </body>
 </html>
