@@ -1,8 +1,9 @@
 <template>
   <scrollbar
     :isMobile="$_select_isMobile"
-    :maxHeight="maxHeight || '50vh'"
+    :maxHeight="maxHeight"
     :scrollTo="scrollTo"
+    :marginToWrap="marginToWrap"
     v-on="$listeners"
   >
     <div
@@ -27,6 +28,7 @@ export default {
   props: {
     $_select_isMobile: Boolean,
     maxHeight: [Number, String],
+    marginToWrap: Number,
     options: Array,
   },
   data() {

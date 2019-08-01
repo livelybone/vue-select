@@ -1,24 +1,19 @@
-import { ArrowPosition } from '@livelybone/vue-popper'
-import { PopperOptions } from 'popper.js'
+import { VuePopperProps } from '@livelybone/vue-popper'
 import Vue from 'vue'
-
-interface ScrollbarProps {
-  isMobile: boolean
-  maxHeight: number | string
-}
+import { VueScrollbarProps } from 'vue-scrollbar-live'
 
 declare class Common extends Vue {
-  id: string | number
+  id?: string | number
   /**
    * Default to true
    * */
-  canEdit: boolean
+  canEdit?: boolean
   /**
    * Default to false
    * */
-  canSearch: boolean
-  placeholder: string
-  searchPlaceholder: string
+  canSearch?: boolean
+  placeholder?: string
+  searchPlaceholder?: string
   /**
    * Props of popper.js
    *
@@ -37,12 +32,7 @@ declare class Common extends Vue {
    *   },
    * }
    * */
-  popperProps: {
-    arrowPosition: ArrowPosition
-    arrowOffsetScaling: number
-    referenceElm: Element
-    popperOptions: PopperOptions
-  }
+  popperProps?: VuePopperProps
   /**
    * Props of vue-scrollbar-live
    *
@@ -52,7 +42,7 @@ declare class Common extends Vue {
    *   maxHeight: '50vh',
    * }
    * */
-  scrollbarProps: ScrollbarProps
+  scrollbarProps?: VueScrollbarProps
 }
 
 export interface SelectOptions {
@@ -63,7 +53,7 @@ export interface SelectOptions {
 declare class SelectBase extends Common {
   value: string | number
   options: SelectOptions
-  inputWrapStyle: Object
+  inputWrapStyle?: CSSStyleDeclaration | string
 }
 
 declare class SelectMulti extends Common {
@@ -79,31 +69,31 @@ export type ExpandType = 'click' | 'hover'
 
 declare class Cascader extends Common {
   value: Array<string | number>
+  options: CascaderOptions
   /**
    * Set how to expand children options
    *
    * Default to 'click'
    * */
-  expandType: ExpandType
+  expandType?: ExpandType
   /**
    * If set to true, options of all level can be selected
    *
    * Default to false
    * */
-  changeOnSelect: boolean
-  inputWrapStyle: Object
-  options: CascaderOptions
+  changeOnSelect?: boolean
+  inputWrapStyle?: CSSStyleDeclaration | string
 }
 
 declare class CasecaderMulti extends Common {
   value: Array<Array<string | number>>
+  options: CascaderOptions
   /**
    * Set how to expand children options
    *
    * Default to 'click'
    * */
-  expandType: ExpandType
-  options: CascaderOptions
+  expandType?: ExpandType
 }
 
 export { SelectBase, SelectMulti, Cascader, CasecaderMulti }

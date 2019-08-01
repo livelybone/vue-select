@@ -28,7 +28,8 @@
       >
         <options
           :$_select_isMobile="$_select_isMobile"
-          :maxHeight="maxHeight || '50vh'"
+          :maxHeight="maxHeight"
+          :marginToWrap="marginToWrap"
           :options="showOptions"
           @startDrag="shouldHide = false"
           @endDrag="endDrag"
@@ -42,7 +43,8 @@
           <options
             :key="i"
             :$_select_isMobile="$_select_isMobile"
-            :maxHeight="maxHeight || '50vh'"
+            :maxHeight="maxHeight"
+            :marginToWrap="marginToWrap"
             :options="options"
             @startDrag="shouldHide = false"
             @endDrag="endDrag"
@@ -65,7 +67,7 @@ export default {
   mixins: [Mixin, CascaderMixin],
   props: {
     changeOnSelect: Boolean,
-    inputWrapStyle: Object,
+    inputWrapStyle: [String, Object],
   },
   computed: {
     showSelected() {

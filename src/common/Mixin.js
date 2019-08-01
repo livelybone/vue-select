@@ -73,7 +73,11 @@ export default {
     },
     maxHeight() {
       const { maxHeight } = this.scrollbarProps || {}
-      return maxHeight
+      return maxHeight || '50vh'
+    },
+    marginToWrap() {
+      const { marginToWrap } = this.scrollbarProps || {}
+      return marginToWrap || 2
     },
   },
   watch: {

@@ -1,7 +1,7 @@
 # @livelybone/vue-select
 [![NPM Version](http://img.shields.io/npm/v/@livelybone/vue-select.svg?style=flat-square)](https://www.npmjs.com/package/@livelybone/vue-select)
 [![Download Month](http://img.shields.io/npm/dm/@livelybone/vue-select.svg?style=flat-square)](https://www.npmjs.com/package/@livelybone/vue-select)
-![gzip with dependencies: kb](https://img.shields.io/badge/gzip--with--dependencies-kb-brightgreen.svg "gzip with dependencies: kb")
+![gzip with dependencies: 15kb](https://img.shields.io/badge/gzip--with--dependencies-15kb-brightgreen.svg "gzip with dependencies: 15kb")
 ![typescript](https://img.shields.io/badge/typescript-supported-blue.svg "typescript")
 ![pkg.module](https://img.shields.io/badge/pkg.module-supported-blue.svg "pkg.module")
 ![ssr supported](https://img.shields.io/badge/ssr-supported-blue.svg "ssr supported")
@@ -76,7 +76,7 @@ const defaultPopperProps = {
 | Name              | Type                  | DefaultValue          | Description  |
 | ----------------- | --------------------- | --------------------- | ------------ |
 | `value`           | `[String, Number]`    | none                  |  |
-| `inputWrapStyle`  | `Object`              | none                  |  |
+| `inputWrapStyle`  | `[String, Object]`    | none                  |  |
 
 ### SelectMulti
 | Name              | Type                  | DefaultValue          | Description  |
@@ -89,7 +89,7 @@ const defaultPopperProps = {
 | `value`           | `Array`               | none                  |  |
 | `expandType`      | `String`              | `click`               | Options: `['click', 'hover']`. Set how to expand children options |
 | `changeOnSelect`  | `Boolean`             | `false`               | If set to true, options of all level can be selected |
-| `inputWrapStyle`  | `Object`              | none                  | input wrap style |
+| `inputWrapStyle`  | `[String, Object]`    | none                  | input wrap style |
 
 ### CascaderMulti
 | Name              | Type                  | DefaultValue          | Description  |

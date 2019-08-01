@@ -31,7 +31,8 @@
       >
         <options
           :$_select_isMobile="$_select_isMobile"
-          :maxHeight="maxHeight || '50vh'"
+          :maxHeight="maxHeight"
+          :marginToWrap="marginToWrap"
           :options="showOptions"
           @startDrag="shouldHide = false"
           @endDrag="endDrag"
