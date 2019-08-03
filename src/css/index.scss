@@ -65,9 +65,9 @@ $option-padding: size(0.4);
 
 /* scrollbar css */
 .scrollbar-wrap .scrollbar {
-  width: size(0.4);
-  border-radius: size(0.6);
-  background: #eee;
+  width: size(0.4) !important;
+  border-radius: size(0.6) !important;
+  background: #eee !important;
 }
 
 /* popper css */
