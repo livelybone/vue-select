@@ -27,3 +27,4 @@ yarn.lock
 /.tsconfig.json
 /webpack.*.js
 /rollup.*.js
+/watch.js
