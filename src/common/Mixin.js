@@ -129,9 +129,7 @@ export default {
         const item1 = pre[item.value]
         if (item1 && item1.name !== item.name) {
           throw new Error(
-            `vue-select: the options at same level have conflict items(name: ${
-              item.name
-            } & name: ${item1.name}) that have the same value`,
+            `vue-select: the options at same level have conflict items(name: ${item.name} & name: ${item1.name}) that have the same value`,
           )
         } else if (
           item1 &&

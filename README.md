@@ -16,6 +16,15 @@ https://github.com/livelybone/vue-select
 ## Demo
 https://livelybone.github.io/vue/vue-select/
 
+## Run Example
+Your can see the usage by run the example of the module, here is the step:
+
+1. Clone the library `git clone https://github.com/livelybone/vue-select.git`
+2. Go to the directory `cd vue-select`
+3. Install npm dependencies `npm i`(use taobao registry: `npm i --registry=http://registry.npm.taobao.org`)
+4. Open service `npm run dev`
+5. See the example(usually is `http://127.0.0.1/examples/test.html`) in your browser
+
 ## Installation
 ```bash
 npm i -S @livelybone/vue-select

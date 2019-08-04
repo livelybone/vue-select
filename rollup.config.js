@@ -9,11 +9,7 @@ const baseConf = require('./rollup.config.base')
 
 const formats = ['es', 'umd']
 
-fs.copyFileSync(
-  path.resolve(__dirname, './src/css/index.scss'),
-  path.resolve(__dirname, './lib/css/index.scss'),
-)
-console.log('>> css file copy successful')
+const isWatch = process.env.BUILD_ENV === 'watch'
 
 function getEntries() {
   const reg = /\.vue$/
@@ -55,14 +51,17 @@ const conf = entry => ({
   ],
 })
 
-export default [
-  {
-    name: 'index',
-    filename: './src/index.js',
-    formats: ['es'],
-    needUglify: false,
-    external: true,
-  },
-  { name: 'index', filename: './src/index.js', formats: ['umd'] },
-  ...getEntries(),
-].map(conf)
+export default (isWatch
+  ? [{ name: 'index', filename: './src/index.js', formats: ['umd'] }]
+  : [
+      {
+        name: 'index',
+        filename: './src/index.js',
+        formats: ['es'],
+        needUglify: false,
+        external: true,
+      },
+      { name: 'index', filename: './src/index.js', formats: ['umd'] },
+      ...getEntries(),
+    ]
+).map(conf)
