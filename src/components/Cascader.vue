@@ -104,6 +104,7 @@ export default {
     click(option, i = 0, isHover = false) {
       const { value } = option
       if (this.tempVal[i] !== value) {
+        this.tempVal.length = i + 1
         if (i === 0) this.tempVal = [value]
         else this.$set(this.tempVal, i, value)
       }

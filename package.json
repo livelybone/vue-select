@@ -1,6 +1,6 @@
 {
   "name": "@livelybone/vue-select",
-  "version": "2.6.4",
+  "version": "2.7.0",
   "description": "A vue select component, includes cascader",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
@@ -16,7 +16,9 @@
     "eslint": "eslint ./ --ext .vue,.js --fix",
     "test": "cross-env BABEL_ENV=test karma start --single-run",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "release": "npm publish --registry=https://registry.npmjs.org",
+    "release:alpha": "npm publish --tag alpha --registry=https://registry.npmjs.org"
   },
   "repository": {
     "type": "git",

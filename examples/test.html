@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>vue-select</title>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
   <script src="../lib/umd/index.js"></script>
   <link rel="stylesheet" href="../lib/css/index.css">
   <style>
@@ -29,7 +29,7 @@
 <div id="cascader-multi"></div>
 <!--<button onclick="console.log('button',1)">点击</button>-->
 <script type="text/javascript">
-console.log(VueSelect)
+console.log(VueSelect, Vue)
 var isMobile = /Android|webOS|iPhone|iPod|iPad|BlackBerry|Windows Phone/i.test(navigator.userAgent)
 var popperProps = {
   popperOptions: {
@@ -39,7 +39,7 @@ var popperProps = {
   },
 }
 
-new Vue({
+Vue.createApp({
   el: '#select',
   template: '<vue-select class="select"' +
     ' :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}"' +
@@ -91,8 +91,8 @@ new Vue({
     },
   },
   components: { 'vue-select': VueSelect.SelectBase },
-})
-new Vue({
+}).mount('#select')
+Vue.createApp({
   el: '#multi',
   template: '<vue-select-multi class="select"' +
     ' :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}"' +
@@ -147,8 +147,8 @@ new Vue({
     },
   },
   components: { 'vue-select-multi': VueSelect.SelectMulti },
-})
-new Vue({
+}).mount('#multi')
+Vue.createApp({
   el: '#cascader',
   template: '<cascader class="select"' +
     ' :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}"' +
@@ -225,8 +225,8 @@ new Vue({
     },
   },
   components: { 'cascader': VueSelect.Cascader },
-})
-new Vue({
+}).mount('#cascader')
+Vue.createApp({
   el: '#cascader-multi',
   template: '<cascader-multi class="select"' +
     ' :scrollbarProps="{isMobile:isMobile, maxHeight:\'30vh\'}"' +
@@ -302,7 +302,7 @@ new Vue({
     },
   },
   components: { 'cascader-multi': VueSelect.CascaderMulti },
-})
+}).mount('#cascader-multi')
 
 </script>
 </body>
